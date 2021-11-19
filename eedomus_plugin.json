@@ -1,0 +1,310 @@
+{
+    "plugin_id": "teslaapp",
+    "name_fr": "Tesla car",
+    "icon": "tesla.png",
+    "version": "1.0",
+    "creation_date": "2021-11-17",
+    "modification_date": "2021-11-19",
+    "author": "<a href='https://forum.eedomus.com/ucp.php?i=pm&mode=compose&u=5280' target='_blank'>@mediacloud</a> / <a href='https://github.com/mediacloudusr/teslaeedomus' target='_blank'> GitHub </a>",
+    "description_fr": "Recupérez les informations de votre véhicule Tesla à partir de votre box Eedomus.",
+    "description_en": "Get the Tesla car information from your Eedomus box.",
+    "forum_link": "https://forum.eedomus.com/viewtopic.php?f=16&t=10515",
+    "parameters": [
+        {
+            "parameter": "token",
+            "description": "Tesla access token :",
+            "xtype": "textfield",
+            "field": "allowBlank: false, width: 500"
+        },
+        {
+            "parameter": "id",
+            "description": "Vehicle id (optional) :",
+            "xtype": "textfield",
+            "field": "allowBlank: true, width: 200",
+            "default_value": "(auto)"
+        }
+    ],
+    "scripts": [
+        {
+            "name": "tesla_oauth.php"
+        }
+    ],
+    "devices": [
+        {
+            "device_id": "position",
+            "module_id": "31",
+            "name_fr": "plugin.name - Position",
+            "utilisation_id": "0",
+            "value_type": "string",
+            "parameters": {
+                "value_type": "string",
+                "ignore_errors": 3
+            }
+        },
+        {
+            "device_id": "charge_state_battery_level",
+            "create": "plugin.parameters.charge_state_battery_level",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - Battery level",
+            "icon": "battery.png",
+            "utilisation_id": "35",
+            "value_unit": "%",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "float",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/response/charge_state/battery_level",
+                "POLLING": "5"
+            }
+        },
+        {
+            "device_id": "charge_state_charge_limit_soc",
+            "create": "plugin.parameters.charge_state_charge_limit_soc",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - Charge limit soc",
+            "utilisation_id": "35",
+            "value_unit": "%",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "float",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/response/charge_state/charge_limit_soc",
+                "POLLING": "5"
+            }
+        },
+        {
+            "device_id": "charge_state_charge_energy_added",
+            "create": "plugin.parameters.charge_state_charge_energy_added",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - Charge energy added",
+            "utilisation_id": "35",
+            "value_unit": "kWh",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "float",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/response/charge_state/charge_energy_added",
+                "POLLING": "5"
+            }
+        },
+        {
+            "device_id": "charge_state_charge_port_door_open",
+            "create": "plugin.parameters.charge_state_charge_port_door_open",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - Charge port door open",
+            "utilisation_id": "10",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "string",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/response/charge_state/charge_port_door_open",
+                "POLLING": "5"
+            }
+        },
+        {
+            "device_id": "charge_state_charging_state",
+            "create": "plugin.parameters.charge_state_charging_state",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - Charging state",
+            "utilisation_id": "35",
+            "value_unit": "",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "string",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/response/charge_state/charging_state",
+                "POLLING": "5"
+            }
+        },
+        {
+            "device_id": "charge_state_minutes_to_full_charge",
+            "create": "plugin.parameters.charge_state_minutes_to_full_charge",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - Minutes to full charge",
+            "utilisation_id": "35",
+            "value_unit": "min",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "float",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/response/charge_state/minutes_to_full_charge",
+                "POLLING": "5"
+            }
+        },
+        {
+            "device_id": "charge_state_charge_rate",
+            "create": "plugin.parameters.charge_state_charge_rate",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - Charge rate",
+            "utilisation_id": "35",
+            "value_unit": "A",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "float",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/response/charge_state/charge_rate",
+                "POLLING": "5"
+            }
+        },
+        {
+            "device_id": "climate_state_outside_temp",
+            "create": "plugin.parameters.climate_state_outside_temp",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - Outside temperature",
+            "utilisation_id": "7",
+            "value_unit": "°C",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "float",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/response/climate_state/outside_temp",
+                "POLLING": "5"
+            }
+        },
+        {
+            "device_id": "climate_state_inside_temp",
+            "create": "plugin.parameters.climate_state_inside_temp",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - Inside temperature",
+            "utilisation_id": "7",
+            "value_unit": "°C",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "float",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/response/climate_state/inside_temp",
+                "POLLING": "5"
+            }
+        },
+        {
+            "device_id": "vehicle_state_odometer",
+            "create": "plugin.parameters.vehicle_state_odometer",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - Odometer",
+            "utilisation_id": "35",
+            "value_unit": "km",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "float",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/odometerkm",
+                "POLLING": "5"
+            }
+        },
+        {
+            "device_id": "vehicle_state_locked",
+            "create": "plugin.parameters.vehicle_state_locked",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - Locked",
+            "utilisation_id": "10",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "string",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/response/vehicle_state/locked",
+                "POLLING": "5"
+            }
+        },
+        {
+            "device_id": "vehicle_state_vehicle_name",
+            "create": "plugin.parameters.vehicle_state_vehicle_name",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - Vehicle name",
+            "utilisation_id": "0",
+            "value_unit": "",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "string",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/response/vehicle_state/vehicle_name",
+                "POLLING": "15"
+            }
+        },
+        {
+            "device_id": "drive_state_shift_state",
+            "create": "plugin.parameters.drive_state_shift_state",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - Shift state",
+            "utilisation_id": "0",
+            "value_unit": "",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "string",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/response/drive_state/shift_state",
+                "POLLING": "5"
+            }
+        },
+        {
+            "device_id": "drive_state_speed",
+            "create": "plugin.parameters.drive_state_speed",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - Speed",
+            "utilisation_id": "29",
+            "value_unit": "km/h",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "string",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/speedkmh",
+                "POLLING": "5"
+            }
+        }
+    ]
+}
