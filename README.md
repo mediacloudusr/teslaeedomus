@@ -36,4 +36,5 @@ The plugin (v 1.0) reports the following data to Eedomus :
 - shift state
 - speed
 
-Polling interval is 5 minutes.
+**Note**
+Polling interval is 5 minutes. The script does not awake the car to avoid battery drain. As a consequence, the data cannot be retrieved when the car is asleep.
