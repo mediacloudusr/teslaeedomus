@@ -1,9 +1,8 @@
 <?php
 // PHP Script for Tesla plugin for Eedomus
-// Version 1.0 - November 2021 // Initial version
+// Version 1.1 - November 2021
 
 $api_url = 'https://owner-api.teslamotors.com/';
-$auth_url = 'https://auth.tesla.com/';
 
 // Return cache ?
 $CACHE_DURATION = 1; // minutes
@@ -53,15 +52,42 @@ if ($params['error'] != '') {
 	die("Error when getting data: [" . $params['error']);
 }
 
-// mile to km conversion for odometer and speed
-$odometerkm = round($params['response']['vehicle_state']['odometer'] * 1.60934);
-$speedkmh = round($params['response']['drive_state']['speed'] * 1.60934);
-
-
-
 // Output XML
-$xml_content = jsonToXML($response);
-$cached_xml = str_replace('<root>', '<root><cached>0</cached><odometerkm>' . $odometerkm . '</odometerkm><speedkmh>' . $speedkmh . '</speedkmh>', $xml_content);
+$paramResponse = $params['response'];
+
+// Mile to km conversion for odometer and speed
+$odometerkm = round($paramResponse['vehicle_state']['odometer'] * 1.60934);
+$speedkmh = round($paramResponse['drive_state']['speed'] * 1.60934);
+$batteryrange = round($paramResponse['charge_state']['battery_range'] * 1.60934);
+$estbatteryrange = round($paramResponse['charge_state']['est_battery_range'] * 1.60934);
+
+$chargeportdooropen = $paramResponse['charge_state']['charge_port_door_open'] ? "true": "false";
+$locked = $paramResponse['vehicle_state']['locked'] ? "true": "false";
+
+sdk_header('text/xml');
+$cached_xml = '<root>
+		<cached>0</cached>
+		<battery_level>'.$paramResponse['charge_state']['battery_level'].'</battery_level>
+		<charge_limit_soc>'.$paramResponse['charge_state']['charge_limit_soc'].'</charge_limit_soc>
+		<charge_energy_added>'.$paramResponse['charge_state']['charge_energy_added'].'</charge_energy_added>
+		<charge_port_door_open>'.$chargeportdooropen.'</charge_port_door_open>
+		<charging_state>'.$paramResponse['charge_state']['charging_state'].'</charging_state>
+		<minutes_to_full_charge>'.$paramResponse['charge_state']['minutes_to_full_charge'].'</minutes_to_full_charge>
+		<charge_rate>'.$paramResponse['charge_state']['charge_rate'].'</charge_rate>
+		<charger_voltage>'.$paramResponse['charge_state']['charger_voltage'].'</charger_voltage>
+		<charger_power>'.$paramResponse['charge_state']['charger_power'].'</charger_power>
+		<battery_range>'.$batteryrange.'</battery_range>
+		<est_battery_range>'.$estbatteryrange.'</est_battery_range>
+		<outside_temp>'.$paramResponse['climate_state']['outside_temp'].'</outside_temp>
+		<inside_temp>'.$paramResponse['climate_state']['inside_temp'].'</inside_temp>
+		<odometerkm>'.$odometerkm.'</odometerkm>
+		<locked>'.$locked.'</locked>
+		<vehicle_name>'.$paramResponse['vehicle_state']['vehicle_name'].'</vehicle_name>
+		<shift_state>'.$paramResponse['drive_state']['shift_state'].'</shift_state>
+		<speedkmh>'.$speedkmh.'</speedkmh>
+		</root>
+		';
+
 echo $cached_xml;
 $cached_xml = str_replace('<cached>0</cached>', '<cached>1</cached>', $cached_xml);
 if ($xml_content != '') { // non empty

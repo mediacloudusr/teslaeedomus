@@ -10,7 +10,7 @@ See this [forum thread](https://forum.eedomus.com/viewtopic.php?f=16&t=10515) fo
 
 ### Tesla access token
 
-To create a Tesla access token, you can can use the [Tesla tokens app for Android](https://play.google.com/store/apps/details?id=net.leveugle.teslatokens&hl=fr). Token must be renewed every 6 weeks.
+To get a Tesla access token, you can can use a Tesla token app [on Android](https://play.google.com/store/apps/details?id=net.leveugle.teslatokens&hl=fr) or [on iOS](https://apps.apple.com/us/app/auth-app-for-tesla/id1552058613). Token must be renewed every 6 weeks.
 
 ### Vehicle id
 
@@ -18,16 +18,20 @@ By default, the plug in will use the first vehicle of your account. You can forc
 
 ## Features
 
-The plugin (v 1.0) reports the following data to Eedomus :
+The plugin reports the following data to Eedomus :
 
 - geolocalisation of the car
 - battery level
-- soc level
+- limit soc
 - energy added
 - charge port door status
 - charging state
 - minutes to full charge
 - charge rate
+- charger voltage
+- Charger power
+- battery range
+- estimated battery range
 - outside temperature
 - inside temperature
 - odometer
