@@ -2,7 +2,7 @@
     "plugin_id": "teslaapp",
     "name_fr": "Tesla car",
     "icon": "tesla.png",
-    "version": "1.1",
+    "version": "1.2",
     "creation_date": "2021-11-17",
     "modification_date": "2021-11-19",
     "author": "<a href='https://forum.eedomus.com/ucp.php?i=pm&mode=compose&u=5280' target='_blank'>@mediacloud</a> / <a href='https://github.com/mediacloudusr/teslaeedomus' target='_blank'> GitHub </a>",
@@ -51,6 +51,23 @@
             "parameters": {
                 "value_type": "string",
                 "ignore_errors": 3
+            }
+        },
+        {
+            "device_id": "vehicle_state_state",
+            "parent_id": "position",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "plugin.name - State",
+            "utilisation_id": "35",
+            "parameters": {
+                "VAR1": "plugin.parameters.token",
+                "VAR2": "plugin.parameters.id",
+                "value_type": "string",
+                "ignore_errors": 3,
+                "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+                "RAW_XPATH": "/root/vehicle_state",
+                "POLLING": "5"
             }
         },
         {
@@ -219,7 +236,7 @@
             "type": "http",
             "name_fr": "plugin.name - Charger power",
             "utilisation_id": "26",
-            "value_unit": "W",
+            "value_unit": "kW",
             "parameters": {
                 "VAR1": "plugin.parameters.token",
                 "VAR2": "plugin.parameters.id",
@@ -364,7 +381,7 @@
                 "ignore_errors": 3,
                 "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
                 "RAW_XPATH": "/root/vehicle_name",
-                "POLLING": "15"
+                "POLLING": "5"
             }
         },
         {

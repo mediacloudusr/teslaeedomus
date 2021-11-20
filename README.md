@@ -6,6 +6,8 @@ This plugin was developped by [mediacloud](https://forum.eedomus.com/ucp.php?i=p
 
 See this [forum thread](https://forum.eedomus.com/viewtopic.php?f=16&t=10515) for more information or for feedback.
 
+Current version is v1.2.
+
 ## Configuration
 
 ### Tesla access token
@@ -14,13 +16,14 @@ To get a Tesla access token, you can can use a Tesla token app [on Android](http
 
 ### Vehicle id
 
-By default, the plug in will use the first vehicle of your account. You can force a specific vehicle if needed.
+By default, the plugin uses the first vehicle of your account. You can force a specific vehicle if needed.
 
 ## Features
 
 The plugin reports the following data to Eedomus :
 
 - geolocalisation of the car
+- car state
 - battery level
 - limit soc
 - energy added
@@ -40,5 +43,12 @@ The plugin reports the following data to Eedomus :
 - shift state
 - speed
 
-**Note**
-Polling interval is 5 minutes. The script does not awake the car to avoid battery drain. As a consequence, the data cannot be retrieved when the car is asleep.
+## Polling interval and battery drain
+
+There are some optmizations in the plugin to avoid battery drain. Here are the details :
+
+- Polling interval is 5 minutes for the meters but there is a data cache of 15 minutes in the script to allow the car go to sleep. So the data reported can be 15 min late, including for the geolocation data.
+- When the car is asleep, data is not retrieved to avoid awaking the car and creating a battery drain. There is an exception for the car state which uses a different API : state is always updated every 15 minutes.
+- It may take up to 15 minutes to know that the car is back as online and retrieve the data again.
+
+This behavior may be improved in a future version of the plugin.
