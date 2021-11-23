@@ -10,6 +10,8 @@ Current version is v1.3.
 
 ## Features
 
+![tesla car overview](https://user-images.githubusercontent.com/94607717/143082462-a6ddc241-7754-4ad4-86c0-0ac2333d2d56.png)
+
 The plugin reports the following data to Eedomus :
 
 - geolocalisation of the car
@@ -38,6 +40,8 @@ The plugin reports the following data to Eedomus :
 - speed
 - sentinel (sentry) state
 
+![tesla car actions](https://user-images.githubusercontent.com/94607717/143082466-fc94abad-1e12-46c0-9315-e209ff066bd4.png)
+
 It exposes the following commands which can be used in rules :
 
 - wake_up
@@ -49,10 +53,6 @@ It exposes the following commands which can be used in rules :
 - open/close charge port door
 
 Note : each command calls the 'wake_up' command before, if needed.
-
-![tesla car overview](https://user-images.githubusercontent.com/94607717/143082462-a6ddc241-7754-4ad4-86c0-0ac2333d2d56.png)
-
-![tesla car actions](https://user-images.githubusercontent.com/94607717/143082466-fc94abad-1e12-46c0-9315-e209ff066bd4.png)
 
 ## Installation
 
