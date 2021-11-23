@@ -50,6 +50,10 @@ It exposes the following commands which can be used in rules :
 
 Note : each command calls the 'wake_up' command before, if needed.
 
+![tesla car overview](https://user-images.githubusercontent.com/94607717/143082462-a6ddc241-7754-4ad4-86c0-0ac2333d2d56.png)
+
+![tesla car actions](https://user-images.githubusercontent.com/94607717/143082466-fc94abad-1e12-46c0-9315-e209ff066bd4.png)
+
 ## Installation
 
 Install the plugin from the Eedomus store. It is recommended to create a Telsa room and assign it to the plugin at creation time.
