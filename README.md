@@ -1,6 +1,6 @@
 # Tesla Car Application for Eedomus
 
-Follow your Tesla car with this plugin for Eedomus.
+Follow your Tesla car with this plugin for [Eedomus](https://www.eedomus.com/).
 
 This plugin was developped by [mediacloud](https://forum.eedomus.com/ucp.php?i=pm&mode=compose&u=5280).
 
