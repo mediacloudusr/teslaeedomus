@@ -10,7 +10,7 @@ Current version is v1.4.
 
 ## Features
 
-![tesla car overview](https://user-images.githubusercontent.com/94607717/143082462-a6ddc241-7754-4ad4-86c0-0ac2333d2d56.png)
+![tesla car overview](https://user-images.githubusercontent.com/94607717/143620875-1c16aeba-d1a6-46f8-ac67-399214b530a0.png)
 
 The plugin reports the following data to Eedomus :
 
@@ -43,7 +43,7 @@ The plugin reports the following data to Eedomus :
 - speed
 - sentinel (sentry) state
 
-![tesla car actions](https://user-images.githubusercontent.com/94607717/143082466-fc94abad-1e12-46c0-9315-e209ff066bd4.png)
+![tesla car actions](https://user-images.githubusercontent.com/94607717/143620966-adb1b4a2-d270-4eeb-ae6b-5c9a7aa78c9f.png)
 
 It exposes the following commands which can be used in rules :
 
