@@ -81,6 +81,6 @@ There are optimizations in the script to avoid battery drain. Here are some deta
 
 - Polling interval is 2 to 5 minutes for the meters but there is a data cache of 15 minutes in the script to allow the car go to sleep. So the data reported can be 15 min late, including for the geolocation data.
 - When the car is asleep, car general data and GPS data are retrieved every 15 minutes but data will be empty as the car is asleep. There is an exception for the car state which uses a different API : state is always updated every 3 minutes.
-- When car is active (air conditioning is on, charging happening, car is not parked, sentinel is on), then monitoring is done every 3 minutes. If the car seems inactive for 10 minutes, the monitoring switchback to every 15 minutes so the car can go asleep if needed.
+- When car is active (air conditioning is on, charging happening, car is not parked, sentinel is on), then monitoring is done every 3 minutes. If the car seems inactive for 10 minutes, the monitoring switch back to every 15 minutes so the car can go asleep if needed.
 
 This behavior may be improved in a future version of the plugin.
