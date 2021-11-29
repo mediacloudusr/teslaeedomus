@@ -6,7 +6,7 @@ This plugin was developped by [mediacloud](https://forum.eedomus.com/ucp.php?i=p
 
 See this [forum thread](https://forum.eedomus.com/viewtopic.php?f=16&t=10515) for more information or for feedback.
 
-Current version is v1.4.
+Current version is v1.5.
 
 ## Features
 
@@ -57,6 +57,7 @@ It exposes the following commands which can be used in rules :
 - open/close charge port door
 - set charge rate (A)
 - set charge limit (%)
+- start/stop sentinel
 
 Note : each command calls the 'wake_up' command before, if needed.
 
@@ -64,6 +65,7 @@ Note : each command calls the 'wake_up' command before, if needed.
 
 Install the plugin from the Eedomus store.
 It is recommended :
+
 - to create a Telsa room and assign it to the plugin at creation time,
 - have your Tesla car awake when you install the plug-in.
 

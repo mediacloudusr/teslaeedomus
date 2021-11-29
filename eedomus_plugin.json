@@ -2,14 +2,26 @@
   "plugin_id": "teslaapp",
   "name_fr": "Tesla car",
   "icon": "tesla.png",
-  "version": "1.4",
+  "version": "1.5.2",
   "creation_date": "2021-11-17",
-  "modification_date": "2021-11-26",
+  "modification_date": "2021-11-29",
   "author": "<a href='https://forum.eedomus.com/ucp.php?i=pm&mode=compose&u=5280' target='_blank'>@mediacloud</a> / <a href='https://github.com/mediacloudusr/teslaeedomus' target='_blank'> GitHub </a>",
   "description_fr": "Recupérez les informations de votre véhicule Tesla à partir de votre box Eedomus.",
   "description_en": "Get the Tesla car information from your Eedomus box.",
   "forum_link": "https://forum.eedomus.com/viewtopic.php?f=16&t=10515",
   "parameters": [
+    {
+      "parameter": "configuration",
+      "description": "--------- Configuration ----------",
+      "xtype": "textfield",
+      "field": "allowBlank: true, width: 0, style: 'visibility:hidden;'"
+    },
+    {
+      "parameter": "oauth_url",
+      "description": "",
+      "xtype": "displayfield",
+      "field": "style: 'padding: 3px;', value: 'Test - Ne pas utiliser - Cliquez <a href=\\'javascript:genericRegister(\"teslaapp\");\\'>ici pour associer votre compte Tesla</a>'"
+    },
     {
       "parameter": "token",
       "description": "Tesla access token :",
@@ -24,22 +36,178 @@
       "default_value": "(auto)"
     },
     {
-      "parameter": "advanced_charge_info",
-      "description": "Advanced charge info (limit, energy added, charge door, rate, voltage) :",
+      "parameter": "choix_canaux",
+      "description": "--------- Channel choice ----------",
+      "xtype": "textfield",
+      "field": "allowBlank: true, width: 0, style: 'visibility:hidden;'"
+    },
+    {
+      "parameter": "box_gps_coordinates",
+      "description": "GPS coordinates:",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
-      "parameter": "estimated_cost",
-      "description": "Estimated cost of charge :",
+      "parameter": "box_state",
+      "description": "Vehicle state :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
-      "parameter": "vehicle_name",
-      "description": "Display vehicle name :",
+      "parameter": "box_battery_level",
+      "description": "Battery level :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_charge_limit_soc",
+      "description": "Charge limit :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_charge_energy_added",
+      "description": "Charge energy added :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_charge_energy_added_cost",
+      "description": "Charge energy added (cost) :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_charge_port_door_open",
+      "description": "Charge port door :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_charging_state",
+      "description": "Charging state :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_minutes_to_full_charge",
+      "description": "Minutes to charge to limit :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: false"
+    },
+    {
+      "parameter": "box_time_to_full_charge",
+      "description": "Time to charge to limit :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_charge_rate",
+      "description": "Charge rate :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_charge_rate_limit",
+      "description": "Charge rate limit (defined) :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_charger_voltage",
+      "description": "Charger voltage :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_charger_power",
+      "description": "Charger power :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_battery_range",
+      "description": "Battery range (ideal) :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: false"
+    },
+    {
+      "parameter": "box_est_battery_range",
+      "description": "Battery range (estimated) :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_outside_temp",
+      "description": "Outside temperature :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_inside_temp",
+      "description": "Inside temperature :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_is_climate_on",
+      "description": "Heat and air conditioning :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_seat_heater_left",
+      "description": "Left seat heater :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_seat_heater_right",
+      "description": "Right seat heater :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_odometer",
+      "description": "Odometer :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_locked",
+      "description": "Doors :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_vehicle_name",
+      "description": "Vehicle name :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: false"
+    },
+    {
+      "parameter": "box_shift_state",
+      "description": "Shift state :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_speed",
+      "description": "Speed :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_sentry_mode",
+      "description": "Sentinel :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_commands",
+      "description": "Commands :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
     }
   ],
   "scripts": [
@@ -61,7 +229,8 @@
       }
     },
     {
-      "device_id": "position_get",
+      "device_id": "gps_coordinates",
+      "create": "plugin.parameters.box_gps_coordinates",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -80,6 +249,7 @@
     },
     {
       "device_id": "vehicle_state_state",
+      "create": "plugin.parameters.box_state",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -109,6 +279,7 @@
     },
     {
       "device_id": "charge_state_battery_level",
+      "create": "plugin.parameters.box_battery_level",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -128,7 +299,7 @@
     },
     {
       "device_id": "charge_state_charge_limit_soc",
-      "create": "plugin.parameters.advanced_charge_info",
+      "create": "plugin.parameters.box_charge_limit_soc",
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
@@ -214,7 +385,7 @@
     },
     {
       "device_id": "charge_state_charge_energy_added",
-      "create": "plugin.parameters.advanced_charge_info",
+      "create": "plugin.parameters.box_charge_energy_added",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -234,13 +405,13 @@
     },
     {
       "device_id": "charge_state_charge_energy_added_euros",
-      "create": "plugin.parameters.estimated_cost",
+      "create": "plugin.parameters.box_charge_energy_added_cost",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
       "name_fr": "plugin.name - Charge energy added (cost)",
       "utilisation_id": "26",
-      "value_unit": "&#8364;",
+      "value_unit": "&euro;",
       "icon": "teleinfo_money.png",
       "parameters": {
         "VAR1": "plugin.parameters.token",
@@ -254,7 +425,7 @@
     },
     {
       "device_id": "charge_state_charge_port_door_open",
-      "create": "plugin.parameters.advanced_charge_info",
+      "create": "plugin.parameters.box_charge_port_door_open",
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
@@ -290,6 +461,7 @@
     },
     {
       "device_id": "charge_state_charging_state",
+      "create": "plugin.parameters.box_charging_state",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -330,11 +502,11 @@
     },
     {
       "device_id": "charge_state_minutes_to_full_charge",
-      "create": "plugin.parameters.advanced_charge_info",
+      "create": "plugin.parameters.box_minutes_to_full_charge",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Minutes to full charge",
+      "name_fr": "plugin.name - Minutes to charge to limit",
       "icon": "prise_tm.png",
       "utilisation_id": "35",
       "value_unit": "min",
@@ -350,10 +522,11 @@
     },
     {
       "device_id": "charge_state_time_to_full_charge",
+      "create": "plugin.parameters.box_time_to_full_charge",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Time to full charge",
+      "name_fr": "plugin.name - Time to charge to limit",
       "icon": "prise_tm.png",
       "utilisation_id": "35",
       "value_unit": "",
@@ -369,7 +542,7 @@
     },
     {
       "device_id": "charge_state_charge_rate",
-      "create": "plugin.parameters.advanced_charge_info",
+      "create": "plugin.parameters.box_charge_rate",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -388,13 +561,13 @@
       }
     },
     {
-      "device_id": "charge_state_charge_rate_defined",
-      "create": "plugin.parameters.advanced_charge_info",
+      "device_id": "charge_state_charge_rate_limit",
+      "create": "plugin.parameters.box_charge_rate_limit",
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
       "icon": "consoelec.png",
-      "name_fr": "plugin.name - Charge rate (max defined)",
+      "name_fr": "plugin.name - Charge rate limit (defined)",
       "utilisation_id": "43",
       "value_unit": "A",
       "parameters": {
@@ -483,7 +656,7 @@
     },
     {
       "device_id": "charge_state_charger_voltage",
-      "create": "plugin.parameters.advanced_charge_info",
+      "create": "plugin.parameters.box_charger_voltage",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -503,6 +676,7 @@
     },
     {
       "device_id": "charge_state_charger_power",
+      "create": "plugin.parameters.box_charger_power",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -522,7 +696,7 @@
     },
     {
       "device_id": "charge_state_battery_range",
-      "create": "plugin.parameters.advanced_charge_info",
+      "create": "plugin.parameters.box_battery_range",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -541,6 +715,7 @@
     },
     {
       "device_id": "charge_state_est_battery_range",
+      "create": "plugin.parameters.box_est_battery_range",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -559,6 +734,7 @@
     },
     {
       "device_id": "climate_state_outside_temp",
+      "create": "plugin.parameters.box_outside_temp",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -578,6 +754,7 @@
     },
     {
       "device_id": "climate_state_inside_temp",
+      "create": "plugin.parameters.box_inside_temp",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -597,6 +774,7 @@
     },
     {
       "device_id": "climate_state_is_climate_on",
+      "create": "plugin.parameters.box_is_climate_on",
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
@@ -633,6 +811,7 @@
     },
     {
       "device_id": "climate_state_seat_heater_left",
+      "create": "plugin.parameters.box_seat_heater_left",
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
@@ -685,6 +864,7 @@
     },
     {
       "device_id": "climate_state_seat_heater_right",
+      "create": "plugin.parameters.box_seat_heater_right",
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
@@ -737,6 +917,7 @@
     },
     {
       "device_id": "vehicle_state_odometer",
+      "create": "plugin.parameters.box_odometer",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -755,6 +936,7 @@
     },
     {
       "device_id": "vehicle_state_locked",
+      "create": "plugin.parameters.box_locked",
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
@@ -790,7 +972,7 @@
     },
     {
       "device_id": "vehicle_state_vehicle_name",
-      "create": "plugin.parameters.vehicle_name",
+      "create": "plugin.parameters.box_vehicle_name",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -809,6 +991,7 @@
     },
     {
       "device_id": "drive_state_shift_state",
+      "create": "plugin.parameters.box_shift_state",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -827,6 +1010,7 @@
     },
     {
       "device_id": "drive_state_speed",
+      "create": "plugin.parameters.box_speed",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
@@ -845,11 +1029,12 @@
     },
     {
       "device_id": "vehicle_state_sentry_mode",
+      "create": "plugin.parameters.box_sentry_mode",
       "parent_id": "position",
-      "module_id": "51",
+      "module_id": "41",
       "type": "http",
       "name_fr": "plugin.name - Sentinel",
-      "utilisation_id": "35",
+      "utilisation_id": "43",
       "parameters": {
         "VAR1": "plugin.parameters.token",
         "VAR2": "plugin.parameters.id",
@@ -863,17 +1048,24 @@
         {
           "value": "true",
           "description": "On",
-          "icon": "camera_b1.png"
+          "icon": "camera_b1.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=set_sentry_mode&actionparam=on%2Ctrue"
         },
         {
           "value": "false",
           "description": "Off",
-          "icon": "camera_b2.png"
+          "icon": "camera_b2.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&token=[VAR1]&id=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=set_sentry_mode&actionparam=on%2Cfalse"
         }
       ]
     },
     {
       "device_id": "commands",
+      "create": "plugin.parameters.box_commands",
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
