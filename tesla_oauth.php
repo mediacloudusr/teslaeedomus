@@ -211,7 +211,17 @@ switch ($action) {
 		if ((float)$arg[1] <= (float) $chargestate['charge_current_request_max']) {
 			$text_json    = '{ "' . $arg[0] . '": ' . $arg[1] .  '}';
 			sdk_action_on_car($api_url, $id, $headers, $action, $text_json, false);
-		} 
+		}
+		// code continue to report data as xml
+		$nocache = 'true';
+		break;
+
+	case 'set_sentry_mode';
+		$actionparam = getArg('actionparam', true);
+		$arg = explode(",", $actionparam);
+		$text_json    = '{ "' . $arg[0] . '": ' . $arg[1] .  '}';
+		sdk_action_on_car($api_url, $id, $headers, $action, $text_json, false);
+
 		// code continue to report data as xml
 		$nocache = 'true';
 		break;
