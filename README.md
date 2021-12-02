@@ -106,3 +106,5 @@ There are optimizations in the plugin to avoid battery drain. Here are some deta
 ## Note on electricity price
 
 You can modify the price per kWh in the configuration of the 'Charge energy added (cost)" meter. Update the value in the XPATH expression.
+
+![cost](https://user-images.githubusercontent.com/94607717/144512926-09530b1b-6056-4e5a-8109-d33c3a625384.png)
