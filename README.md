@@ -6,7 +6,7 @@ This plugin was developped by [mediacloud](https://forum.eedomus.com/ucp.php?i=p
 
 See this [forum thread](https://forum.eedomus.com/viewtopic.php?f=16&t=10515) for more information or for feedback.
 
-Current version is v1.6.0.
+Current version is v 1.6.0.
 
 ## Features
 
