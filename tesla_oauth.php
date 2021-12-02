@@ -1,20 +1,47 @@
 <?php
-// PHP Script for Tesla plugin for Eedomus
-// Version 1.4 - November 2021
+# This file is part of Tesla Car Plugin for Eedomus <https://github.com/mediacloudusr/teslaeedomus>.
+# It connects to the Tesla API and reports back data to Eedomus.
+# Copyright (C) 2021 mediacloud (https://forum.eedomus.com/ucp.php?i=pm&mode=compose&u=5280)
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with This program. If not, see <http://www.gnu.org/licenses/>.
+#
+# v1.6.0
 
 /////////////////////////////////////////////////////////////////////////
 // Constants
 /////////////////////////////////////////////////////////////////////////
+
 $api_url = 'https://owner-api.teslamotors.com/';
+$api_auth_url = 'https://auth.tesla.com/';
+$code_verifier = 'MTI4NTQyMzc2NjFhNTUzMGQ4YTQ2NjkuNjQzMzM1MjEzNTc5OTMxOTI2MWE1NTMwZDhhNGEwNC4yOTA5NTA0MTIwMjM0ODEwMzE2MWE1NTMwZDhhNGI';
+
+$access_token_duration = 60 * 8; // 8 hours
+
 $CACHE_DURATION = 15; // minutes. Do not set to lower than 15 min if you want your car to go asleep
 $CACHE_DURATION_ACTIVE = 3; // minutes when we are actively monitoring 
 $WAIT_TO_SWITCH_TO_ASLEEP = 10; // minutes when we are actively monitoring 
 $monitor_mode = loadVariable('monitor_mode'); // 'asleep' (monitor every 15 min) or 'active' (monitor every 3 min)
 $time_when_car_was_active = loadVariable('time_when_car_was_active'); // when we are in active mode, let's store when shift is not null or charge active to switch back to asleep mode after no activity for 10 minutes ($WAIT_TO_SWITCH_TO_ASLEEP)
 
-$token = getArg('token', true);
-$token = str_replace(' ', '', $token);
-$headers = array("Authorization: Bearer " . $token, "Content-Type: application/json");
+//$token = getArg('token', true);
+//$token = str_replace(' ', '', $token);
+$access_token = loadVariable('access_token');
+$refresh_token = loadVariable('refresh_token');
+$access_token_start_time = loadVariable('access_token_start_time');
+
+$code = getArg('code', false);
+$code_saved = loadVariable('code', false);
 $action = getArg('action', false, 'get_data');
 $nocache = getArg('nocache', false, 'false'); // used for debug
 $id = getArg('id', true);
@@ -84,7 +111,7 @@ function sdk_get_charge_state($api_url, $id, $headers)
 	return $paramsgps['response'];
 }
 
-function sdk_wake_up_and_wait($api_url, $id, $headers)
+function sdk_wake_up_and_wait($api_url, $id, $headers, $die = true)
 {
 	// wake_up the car
 	$myurlpost = $api_url . 'api/1/vehicles/' . $id . '/wake_up';
@@ -105,17 +132,18 @@ function sdk_wake_up_and_wait($api_url, $id, $headers)
 	// let's not use the cache for data or GPS the next time
 	saveVariable('last_xml_success', '');
 	saveVariable('last_gps_success', '');
-
-	die("wake_up done.");
+ 
+	if ($die) {
+		die("wake_up done.");
+	}
 }
-
 
 function sdk_action_on_car($api_url, $id, $headers, $action, $paramjson, $die = true)
 {
 	// actions on the car
 	$state = sdk_get_car_state($api_url, $id, $headers);
 	if ($state['state'] != 'online') {
-		sdk_wake_up_and_wait($api_url, $id, $headers);
+		sdk_wake_up_and_wait($api_url, $id, $headers, false);
 	}
 
 	// commands to the car
@@ -140,10 +168,101 @@ function sdk_get_id_of_parent_control($moduleId)
 	return $parentid;
 }
 
+function sdk_array_search($needle, $haystack)
+{
+	foreach ($haystack as $first_level_key => $value) {
+		if ($needle === $value) {
+			return $first_level_key;
+		}
+	}
+	return false;
+}
+
+function sdk_random_bytes($bytes)
+{
+	$buf = '';
+	$execCount = 0;
+
+	/**
+	 * Let's not let it loop forever. If we run N times and fail to
+	 * get N bytes of random data, then CAPICOM has failed us.
+	 */
+	do {
+		$buf .= (string) uniqid(rand(), TRUE);
+		if (strlen($buf) >= $bytes) {
+			/**
+			 * Return our random entropy buffer here:
+			 */
+			return (string) substr($buf, 0, $bytes);
+		}
+		++$execCount;
+	} while ($execCount < $bytes);
+
+	/**
+	 * If we reach here, PHP has failed us.
+	 */
+}
+
+function sdk_get_token($url, $paramjson, $tokentype)
+{
+	// get token
+	$headers_refresh = array("Content-Type: application/json");
+	$myurlpost = $url . 'oauth2/v3/token';
+	$response = httpQuery($myurlpost, 'POST', $paramjson, NULL, $headers_refresh);
+	$paramsToken = sdk_json_decode($response);
+	if (!empty($paramsToken['error'])) {
+		die("Error when getting the $tokentype access token : " . $paramsToken['error']);
+	}
+	return $paramsToken;
+}
 
 /////////////////////////////////////////////////////////////////////////
 // Main code
 /////////////////////////////////////////////////////////////////////////
+
+
+// First time or new code, so let's get the refresh token from the code
+if ($action == 'get_state_data' && !empty($code) &&  ($code_saved != $code || (empty($refresh_token)))) {
+
+	$parentId = sdk_get_id_of_parent_control($moduleId);
+	// let's make the code verifier the same than the one generated in the register script 
+	$code_verifier = $parentId . substr($code_verifier, 0, 86 - strlen($parentId));
+
+	$text_json = '{ "grant_type": "authorization_code",
+	"client_id": "ownerapi",
+	"code": "' . $code . '",
+	"code_verifier": "' . $code_verifier . '",
+	"redirect_uri" : "https://auth.tesla.com/void/callback" }';
+		
+	$paramsToken = sdk_get_token($api_auth_url,$text_json,'first');
+	
+	$refresh_token = $paramsToken['refresh_token'];
+	saveVariable('refresh_token', $refresh_token);
+	$access_token = $paramsToken['access_token'];
+	$access_token_start_time = time();
+	saveVariable('access_token_start_time', $access_token_start_time);
+	saveVariable('access_token', $access_token);
+
+	saveVariable('code', $code); // we used it to detect new code !
+}
+
+
+// new access token when it is expired
+if ($action == 'get_state_data' ||  (empty($access_token) || empty($access_token_start_time) ||  ((time() - $access_token_start_time) / 60 > ($access_token_duration - 10)))) { // token age is more than 8 hours minus 10 min
+	$headers_refresh = array("Content-Type: application/json");
+	$text_json = '{ "grant_type": "refresh_token",
+	"client_id": "ownerapi",
+	"scope": "openid email offline_access",
+	"refresh_token" : "' . $refresh_token . '" }';
+
+	$paramsToken = sdk_get_token($api_auth_url,$text_json,'renewable');
+	
+	saveVariable('access_token_start_time', time());
+	$access_token = $paramsToken['access_token'];
+	saveVariable('access_token', $access_token);
+}
+
+$headers = array("Authorization: Bearer " . $access_token, "Content-Type: application/json");
 
 // Id of vehicle. Let's get the saved one or uses the one provided by the user, or redetect it
 $id_saved = loadVariable('cached_id');
@@ -168,16 +287,20 @@ switch ($action) {
 		break;
 
 	case 'flash_lights':
+	case 'honk_horn':
+		sdk_action_on_car($api_url, $id, $headers, $action, null, true);
+		break;
+
 	case 'auto_conditioning_start':
 	case 'auto_conditioning_stop':
-	case 'honk_horn':
 	case 'door_lock':
 	case 'door_unlock':
 	case 'charge_start':
 	case 'charge_stop':
 	case 'charge_port_door_open':
 	case 'charge_port_door_close':
-		sdk_action_on_car($api_url, $id, $headers, $action, null);
+		sdk_action_on_car($api_url, $id, $headers, $action, null, false);
+		$nocache = 'true';
 		break;
 
 	case 'remote_seat_heater_request':
@@ -187,9 +310,7 @@ switch ($action) {
 		sdk_action_on_car($api_url, $id, $headers, $action, $text_json);
 		break;
 
-
 		//charge_current_request_max
-
 	case 'set_charge_limit';
 		$actionparam = getArg('actionparam', true);
 		$arg = explode(",", $actionparam);
@@ -381,6 +502,7 @@ if ($vehiclestatestate == 'online') {
 <vehicle_name>' . $paramResponse['vehicle_state']['vehicle_name'] . '</vehicle_name>
 <shift_state>' . $shiftstate . '</shift_state>
 <sentry_mode>' . $sentrymode . '</sentry_mode>
+<access_token_duration_before_exp>' . (($access_token_start_time + $access_token_duration * 60) - time()) / 60 . '</access_token_duration_before_exp>
 <speedkmh>' . $speedkmh . '</speedkmh>';
 }
 
@@ -398,3 +520,4 @@ if ($paramResponse['drive_state']['shift_state'] != null || $paramResponse['char
 	saveVariable('time_when_car_was_active', time());
 	saveVariable('monitor_mode', 'active');
 }
+?>
