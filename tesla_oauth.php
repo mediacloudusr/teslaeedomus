@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with This program. If not, see <http://www.gnu.org/licenses/>.
 #
-# v1.6.0
+# v1.6.1
 
 /////////////////////////////////////////////////////////////////////////
 // Constants
@@ -244,6 +244,10 @@ if ($action == 'get_state_data' && !empty($code) &&  ($code_saved != $code || (e
 	saveVariable('access_token', $access_token);
 
 	saveVariable('code', $code); // we used it to detect new code !
+
+	// cleaning of variables
+	saveVariable('monitor_mode', '');
+	saveVariable('time_when_car_was_active', '');
 }
 
 
@@ -266,11 +270,17 @@ $headers = array("Authorization: Bearer " . $access_token, "Content-Type: applic
 
 // Id of vehicle. Let's get the saved one or uses the one provided by the user, or redetect it
 $id_saved = loadVariable('cached_id');
-if ($id_saved != '' && $id == '(auto)') {
+if (!empty($id_saved) && $id == '(auto)') {
 	$id = $id_saved;
 }
 
 $vehiclestate = sdk_get_car_state($api_url, $id, $headers);
+
+// if id is auto, then let's use the id returned
+if($id == '(auto)'){
+ $id = $vehiclestate['id_s'];
+}
+
 $vehiclestatestate = $vehiclestate['state'];
 $cached_vehiclestatestate = loadVariable('cached_vehiclestatestate');
 
