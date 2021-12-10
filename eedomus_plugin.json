@@ -2,17 +2,20 @@
   "plugin_id": "teslaapp",
   "name_fr": "Tesla car",
   "icon": "tesla.png",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "creation_date": "2021-11-17",
-  "modification_date": "2021-12-05",
+  "modification_date": "2021-12-11",
   "author": "<a href='https://forum.eedomus.com/ucp.php?i=pm&mode=compose&u=5280' target='_blank'>@mediacloud</a> / <a href='https://github.com/mediacloudusr/teslaeedomus' target='_blank'> GitHub </a>",
   "description_fr": "Recupérez les informations de votre véhicule Tesla à partir de votre box Eedomus.",
   "description_en": "Get the Tesla car information from your Eedomus box.",
+  "description_es": "",
+  "description_it": "",
+  "description_de": "",
   "forum_link": "https://forum.eedomus.com/viewtopic.php?f=16&t=10515",
   "parameters": [
     {
       "parameter": "configuration",
-      "description": "--------- Configuration ----------",
+      "description": "--------- Configuration ------------",
       "xtype": "textfield",
       "field": "allowBlank: true, width: 0, style: 'visibility:hidden;'"
     },
@@ -24,134 +27,146 @@
     },
     {
       "parameter": "code",
-      "description": "Code from the Tesla URL :",
+      "description": "Code extrait de l'URL Tesla :",
       "xtype": "textfield",
       "field": "allowBlank: true, width: 500"
     },
     {
-      "parameter": "id",
-      "description": "Vehicle id (optional) :",
+      "parameter": "vin",
+      "description": "VIN du véhicule (optionnel) :",
       "xtype": "textfield",
       "field": "allowBlank: true, width: 200",
-      "default_value": "(auto)"
+      "default_value": "auto"
     },
     {
       "parameter": "choix_canaux",
-      "description": "--------- Channels choice ---------",
+      "description": "--------- Choix des canaux ---------",
       "xtype": "textfield",
       "field": "allowBlank: true, width: 0, style: 'visibility:hidden;'"
     },
     {
       "parameter": "box_gps_coordinates",
-      "description": "GPS coordinates:",
+      "description": "Coordonnées GPS :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: false"
+    },
+    {
+      "parameter": "box_gps_latitude",
+      "description": "Latitude :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_gps_longitude",
+      "description": "Longitude :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_battery_level",
-      "description": "Battery level :",
+      "description": "Niveau de la batterie :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_charge_limit_soc",
-      "description": "Charge limit :",
+      "description": "Limite de recharge :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_charge_energy_added",
-      "description": "Charge energy added :",
+      "description": "Energie ajoutée :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_charge_energy_added_cost",
-      "description": "Charge energy added (cost) :",
+      "description": "Energie ajoutée (coût) :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_charge_port_door_open",
-      "description": "Charge port door :",
+      "description": "Trappe de la prise :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_charging_state",
-      "description": "Charging state :",
+      "description": "Etat de la recharge :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_minutes_to_full_charge",
-      "description": "Minutes to charge to limit :",
+      "description": "Minutes de recharge restantes :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: false"
     },
     {
       "parameter": "box_time_to_full_charge",
-      "description": "Time to charge to limit :",
+      "description": "Temps de recharge restant :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_charge_rate",
-      "description": "Charge rate :",
+      "description": "Courant de recharge :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_charge_rate_limit",
-      "description": "Charge rate limit (defined) :",
+      "description": "Limite du courant de recharge :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_charger_voltage",
-      "description": "Charger voltage :",
+      "description": "Tension de recharge :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_charger_power",
-      "description": "Charger power :",
+      "description": "Puissance de recharge :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_battery_range",
-      "description": "Battery range (ideal) :",
+      "description": "Autonomie restante (théorique) :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: false"
     },
     {
       "parameter": "box_est_battery_range",
-      "description": "Battery range (estimated) :",
+      "description": "Autonomie restante (estimée) :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_outside_temp",
-      "description": "Outside temperature :",
+      "description": "Température extérieure :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_inside_temp",
-      "description": "Inside temperature :",
+      "description": "Température intérieure :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_is_climate_on",
-      "description": "Heat and air conditioning :",
+      "description": "Chauffage et climatisation :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_seat_heater_left",
-      "description": "Left seat heater :",
+      "description": "Chauffage du siège gauche :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
@@ -163,43 +178,43 @@
     },
     {
       "parameter": "box_odometer",
-      "description": "Odometer :",
+      "description": "Compteur kilométrique :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_locked",
-      "description": "Doors :",
+      "description": "Vérouillage du véhicule :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_vehicle_name",
-      "description": "Vehicle name :",
+      "description": "Nom du véhicule :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: false"
     },
     {
       "parameter": "box_shift_state",
-      "description": "Shift state :",
+      "description": "Levier de vitesse :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_speed",
-      "description": "Speed :",
+      "description": "Vitesse :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_sentry_mode",
-      "description": "Sentinel :",
+      "description": "Sentinelle :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
       "parameter": "box_commands",
-      "description": "Commands :",
+      "description": "Commandes :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
     }
@@ -214,6 +229,7 @@
       "device_id": "position",
       "module_id": "31",
       "name_fr": "plugin.name - Position",
+      "name_en": "plugin.name - Position",
       "utilisation_id": "0",
       "icon": "world.png",
       "value_type": "string",
@@ -228,16 +244,57 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - GPS coordinates",
+      "name_fr": "plugin.name - Coordonnées GPS",
+      "name_en": "plugin.name - GPS coordinates",
       "icon": "maps.png",
       "utilisation_id": "35",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "string",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_gps_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_gps_data",
         "RAW_XPATH": "/root/coordinates",
+        "POLLING": "3"
+      }
+    },
+    {
+      "device_id": "gps_latitude",
+      "create": "plugin.parameters.box_gps_latitude",
+      "parent_id": "position",
+      "module_id": "51",
+      "type": "http",
+      "name_fr": "plugin.name - Latitude",
+      "name_en": "plugin.name - Latitude",
+      "icon": "maps.png",
+      "utilisation_id": "35",
+      "parameters": {
+        "VAR1": "plugin.parameters.code",
+        "VAR2": "plugin.parameters.vin",
+        "value_type": "string",
+        "ignore_errors": 1,
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_gps_data",
+        "RAW_XPATH": "/root/latitude",
+        "POLLING": "3"
+      }
+    },
+    {
+      "device_id": "gps_longitude",
+      "create": "plugin.parameters.box_gps_longitude",
+      "parent_id": "position",
+      "module_id": "51",
+      "type": "http",
+      "name_fr": "plugin.name - Longitude",
+      "name_en": "plugin.name - Longitude",
+      "icon": "maps.png",
+      "utilisation_id": "35",
+      "parameters": {
+        "VAR1": "plugin.parameters.code",
+        "VAR2": "plugin.parameters.vin",
+        "value_type": "string",
+        "ignore_errors": 1,
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_gps_data",
+        "RAW_XPATH": "/root/longitude",
         "POLLING": "3"
       }
     },
@@ -246,14 +303,15 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - State",
+      "name_fr": "plugin.name - Etat",
+      "name_en": "plugin.name - State",
       "utilisation_id": "35",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "list",
         "ignore_errors": 0,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&code=[VAR1]&id=[VAR2]&action=get_state_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&code=[VAR1]&vin=[VAR2]&action=get_state_data",
         "RAW_XPATH": "/root/vehicle_state",
         "POLLING": "1"
       },
@@ -261,17 +319,17 @@
         {
           "value": "asleep",
           "icon": "heartbeat_b2.png",
-          "description": "Asleep"
+          "description": "Endormi"
         },
         {
           "value": "online",
           "icon": "heartbeat_b1.png",
-          "description": "Online"
+          "description": "En ligne"
         },
         {
           "value": "offine",
           "icon": "heartbeat_c2.png",
-          "description": "Offline"
+          "description": "Hors ligne"
         }
       ]
     },
@@ -281,16 +339,17 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Battery level",
+      "name_fr": "plugin.name - Niveau de la batterie",
+      "name_en": "plugin.name - Battery level",
       "icon": "battery.png",
       "utilisation_id": "35",
       "value_unit": "%",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "float",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/battery_level",
         "POLLING": "3"
       }
@@ -301,16 +360,17 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Charge limit (defined)",
+      "name_fr": "plugin.name - Limite de recharge",
+      "name_en": "plugin.name - Charge limit (defined)",
       "icon": "volume.png",
       "utilisation_id": "43",
       "value_unit": "%",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "list",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/charge_limit_soc",
         "POLLING": "3"
       },
@@ -319,7 +379,7 @@
           "value": "50",
           "description": "50",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C50"
         },
@@ -327,7 +387,7 @@
           "value": "70",
           "description": "70",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C70"
         },
@@ -335,7 +395,7 @@
           "value": "75",
           "description": "75",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C75"
         },
@@ -343,7 +403,7 @@
           "value": "80",
           "description": "80",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C80"
         },
@@ -351,7 +411,7 @@
           "value": "85",
           "description": "85",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C85"
         },
@@ -359,7 +419,7 @@
           "value": "90",
           "description": "90",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C90"
         },
@@ -367,7 +427,7 @@
           "value": "95",
           "description": "95",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C95"
         },
@@ -375,7 +435,7 @@
           "value": "100",
           "description": "100",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C100"
         }
@@ -387,16 +447,17 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Charge energy added",
+      "name_fr": "plugin.name - Energie ajoutée",
+      "name_en": "plugin.name - Charge energy added",
       "utilisation_id": "35",
       "value_unit": "kWh",
       "icon": "consoelec.png",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "float",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/charge_energy_added",
         "POLLING": "3"
       }
@@ -407,16 +468,17 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Charge energy added (cost)",
+      "name_fr": "plugin.name - Energie ajoutée (coût)",
+      "name_en": "plugin.name - Charge energy added (cost)",
       "utilisation_id": "26",
       "value_unit": "&euro;",
       "icon": "teleinfo_money.png",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "float",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "(/root/charge_energy_added)*0.1544",
         "POLLING": "3"
       }
@@ -427,14 +489,15 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Charge port door",
+      "name_fr": "plugin.name - Trappe de la prise",
+      "name_en": "plugin.name - Charge port door",
       "utilisation_id": "43",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "list",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/charge_port_door_open",
         "POLLING": "3"
       },
@@ -442,16 +505,16 @@
         {
           "value": "false",
           "icon": "lock_enabled.png",
-          "description": "Closed",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "description": "Fermée",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=charge_port_door_close"
         },
         {
           "value": "true",
           "icon": "lock_disabled.png",
-          "description": "Opened",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "description": "Ouverte",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=charge_port_door_open"
         }
@@ -463,43 +526,44 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Charging state",
+      "name_fr": "plugin.name - Etat de la recharge",
+      "name_en": "plugin.name - Charging state",
       "utilisation_id": "43",
       "value_unit": "",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "list",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/charging_state",
         "POLLING": "3"
       },
       "values": [
         {
           "value": "Charging",
-          "description": "Charging",
+          "description": "En cours",
           "icon": "prise_b1.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=charge_start"
         },
         {
           "value": "Stopped",
-          "description": "Stopped",
+          "description": "Stoppée",
           "icon": "prise_b2.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=charge_stop"
         },
         {
           "value": "Complete",
-          "description": "Complete",
+          "description": "Terminée",
           "icon": "prise_c1.png"
         },
         {
           "value": "Disconnected",
-          "description": "Disconnected",
+          "description": "Déconnectée",
           "icon": "prise_c2.png"
         }
       ]
@@ -510,16 +574,17 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Minutes to charge to limit",
+      "name_fr": "plugin.name - Minutes de recharge restantes",
+      "name_en": "plugin.name - Minutes to charge to limit",
       "icon": "prise_tm.png",
       "utilisation_id": "35",
       "value_unit": "min",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "float",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/minutes_to_full_charge",
         "POLLING": "3"
       }
@@ -530,16 +595,17 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Time to charge to limit",
+      "name_fr": "plugin.name - Temps de recharge restant",
+      "name_en": "plugin.name - Time to charge to limit",
       "icon": "prise_tm.png",
       "utilisation_id": "35",
       "value_unit": "",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "string",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/time_to_full_charge",
         "POLLING": "3"
       }
@@ -551,15 +617,16 @@
       "module_id": "51",
       "type": "http",
       "icon": "consoelec.png",
-      "name_fr": "plugin.name - Charge rate",
+      "name_fr": "plugin.name - Courant de recharge",
+      "name_en": "plugin.name - Charge rate",
       "utilisation_id": "35",
       "value_unit": "A",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "list",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/charge_rate",
         "POLLING": "3"
       }
@@ -571,15 +638,16 @@
       "module_id": "41",
       "type": "http",
       "icon": "consoelec.png",
-      "name_fr": "plugin.name - Charge rate limit (defined)",
+      "name_fr": "plugin.name - Limite du courant de recharge",
+      "name_en": "plugin.name - Charge rate limit (defined)",
       "utilisation_id": "43",
       "value_unit": "A",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "list",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/charge_amps",
         "POLLING": "3"
       },
@@ -588,7 +656,7 @@
           "value": "5",
           "description": "5",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C5"
         },
@@ -596,7 +664,7 @@
           "value": "8",
           "description": "8",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C8"
         },
@@ -604,7 +672,7 @@
           "value": "10",
           "description": "10",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C10"
         },
@@ -612,7 +680,7 @@
           "value": "13",
           "description": "13",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C13"
         },
@@ -620,7 +688,7 @@
           "value": "16",
           "description": "16",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C16"
         },
@@ -628,7 +696,7 @@
           "value": "20",
           "description": "20",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C20"
         },
@@ -636,7 +704,7 @@
           "value": "24",
           "description": "24",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C24"
         },
@@ -644,7 +712,7 @@
           "value": "28",
           "description": "28",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C28"
         },
@@ -652,7 +720,7 @@
           "value": "32",
           "description": "32",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C32"
         }
@@ -665,15 +733,16 @@
       "module_id": "51",
       "type": "http",
       "icon": "consoelec.png",
-      "name_fr": "plugin.name - Charger voltage",
+      "name_fr": "plugin.name - Tension de recharge",
+      "name_en": "plugin.name - Charger voltage",
       "utilisation_id": "35",
       "value_unit": "V",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "float",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/charger_voltage",
         "POLLING": "3"
       }
@@ -685,15 +754,16 @@
       "module_id": "51",
       "type": "http",
       "icon": "consoelec.png",
-      "name_fr": "plugin.name - Charger power",
+      "name_fr": "plugin.name - Puissance de recharge",
+      "name_en": "plugin.name - Charger power",
       "utilisation_id": "26",
       "value_unit": "kW",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "float",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/charger_power",
         "POLLING": "3"
       }
@@ -704,15 +774,17 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Battery range (ideal)",
+      "name_fr": "plugin.name - Autonomie restante (théorique)",
+      "name_en": "plugin.name - Battery range (ideal)",
       "utilisation_id": "35",
       "value_unit": "km",
+      "icon":"autonomie.png",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "float",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/battery_range",
         "POLLING": "3"
       }
@@ -723,15 +795,17 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Battery range (estimated)",
+      "name_fr": "plugin.name - Autonomie restante (estimée)",
+      "name_en": "plugin.name - Battery range (estimated)",
       "utilisation_id": "35",
       "value_unit": "km",
+      "icon":"autonomie.png",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "float",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/est_battery_range",
         "POLLING": "3"
       }
@@ -742,16 +816,17 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Outside temperature",
+      "name_fr": "plugin.name - Température extérieure",
+      "name_en": "plugin.name - Outside temperature",
       "utilisation_id": "7",
       "value_unit": "°C",
       "icon": "thermometer.png",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "float",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/outside_temp",
         "POLLING": "3"
       }
@@ -762,16 +837,17 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Inside temperature",
+      "name_fr": "plugin.name - Température intérieure",
+      "name_en": "plugin.name - Inside temperature",
       "utilisation_id": "7",
       "value_unit": "°C",
       "icon": "thermo.png",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "float",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/inside_temp",
         "POLLING": "3"
       }
@@ -782,15 +858,16 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Heat and air conditioning",
+      "name_fr": "plugin.name - Chauffage et climatisation",
+      "name_en": "plugin.name - Heat and air conditioning",
       "utilisation_id": "43",
       "value_unit": "",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "list",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/is_climate_on",
         "POLLING": "3"
       },
@@ -799,7 +876,7 @@
           "value": "true",
           "description": "On",
           "icon": "fan_b1.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=auto_conditioning_start"
         },
@@ -807,7 +884,7 @@
           "value": "false",
           "description": "Off",
           "icon": "fan_b2.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=auto_conditioning_stop"
         }
@@ -819,15 +896,16 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Left seat heater",
+      "name_fr": "plugin.name - Chauffage du siège gauche",
+      "name_en": "plugin.name - Left seat heater",
       "utilisation_id": "43",
       "value_unit": "",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "list",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/seat_heater_left",
         "POLLING": "3"
       },
@@ -836,31 +914,31 @@
           "value": "0",
           "description": "Off",
           "icon": "heater_0.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C0%2Clevel%2C0"
         },
         {
           "value": "1",
-          "description": "On - level 1",
+          "description": "On - niveau 1",
           "icon": "heater_1.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C0%2Clevel%2C1"
         },
         {
           "value": "2",
-          "description": "On - level 2",
+          "description": "On - niveau 2",
           "icon": "heater_2.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C0%2Clevel%2C2"
         },
         {
           "value": "3",
-          "description": "On - level 3",
+          "description": "On - niveau 3",
           "icon": "heater_3.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C0%2Clevel%2C3"
         }
@@ -872,15 +950,16 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Right seat heater",
+      "name_fr": "plugin.name - Chauffage du siège droit",
+      "name_en": "plugin.name - Right seat heater",
       "utilisation_id": "43",
       "value_unit": "",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "list",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/seat_heater_right",
         "POLLING": "3"
       },
@@ -889,31 +968,31 @@
           "value": "0",
           "description": "Off",
           "icon": "heater_0.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C1%2Clevel%2C0"
         },
         {
           "value": "1",
-          "description": "On - level 1",
+          "description": "On - niveau 1",
           "icon": "heater_1.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C1%2Clevel%2C1"
         },
         {
           "value": "2",
-          "description": "On - level 2",
+          "description": "On - niveau 2",
           "icon": "heater_2.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C1%2Clevel%2C2"
         },
         {
           "value": "3",
-          "description": "On - level 3",
+          "description": "On - niveau 3",
           "icon": "heater_3.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C1%2Clevel%2C3"
         }
@@ -925,15 +1004,16 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Odometer",
+      "name_fr": "plugin.name - Compteur kilométrique",
+      "name_en": "plugin.name - Odometer",
       "utilisation_id": "35",
       "value_unit": "km",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "float",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/odometerkm",
         "POLLING": "3"
       }
@@ -944,31 +1024,32 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Doors",
+      "name_fr": "plugin.name - Vérouillage du véhicule",
+      "name_en": "plugin.name - Doors",
       "utilisation_id": "43",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "list",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/locked",
         "POLLING": "3"
       },
       "values": [
         {
           "value": "true",
-          "description": "Doors locked",
+          "description": "Vérouillé",
           "icon": "lock_enabled.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=door_lock"
         },
         {
           "value": "false",
-          "description": "Doors unlocked",
+          "description": "Dévérouillé",
           "icon": "lock_disabled.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=door_unlock"
         }
@@ -980,15 +1061,17 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Vehicle name",
+      "name_fr": "plugin.name - Nom du véhicule",
+      "name_en": "plugin.name - Vehicle name",
       "utilisation_id": "0",
       "value_unit": "",
+      "icon": "tesla.png",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "string",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/vehicle_name",
         "POLLING": "3"
       }
@@ -999,15 +1082,17 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Shift state",
+      "name_fr": "plugin.name - Levier de vitesse",
+      "name_en": "plugin.name - Shift state",
       "utilisation_id": "0",
       "value_unit": "",
+      "icon": "left_right.png",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "string",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/shift_state",
         "POLLING": "3"
       }
@@ -1018,15 +1103,16 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Speed",
+      "name_fr": "plugin.name - Vitesse",
+      "name_en": "plugin.name - Speed",
       "utilisation_id": "29",
       "value_unit": "km/h",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "string",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/speedkmh",
         "POLLING": "3"
       }
@@ -1037,14 +1123,15 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Sentinel",
+      "name_fr": "plugin.name - Sentinelle",
+      "name_en": "plugin.name - Sentry",
       "utilisation_id": "43",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "list",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]&action=get_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/sentry_mode",
         "POLLING": "3"
       },
@@ -1053,7 +1140,7 @@
           "value": "true",
           "description": "On",
           "icon": "camera_b1.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_sentry_mode&actionparam=on%2Ctrue"
         },
@@ -1061,7 +1148,7 @@
           "value": "false",
           "description": "Off",
           "icon": "camera_b2.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_sentry_mode&actionparam=on%2Cfalse"
         }
@@ -1073,13 +1160,15 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Commands",
+      "name_fr": "plugin.name - Commandes",
+      "name_en": "plugin.name - Commands",
       "icon": "motor.png",
       "value_type": "list",
       "utilisation_id": "43",
+      "visible": "0",
       "parameters": {
         "VAR1": "plugin.parameters.code",
-        "VAR2": "plugin.parameters.id",
+        "VAR2": "plugin.parameters.vin",
         "value_type": "list",
         "ignore_errors": 1,
         "POLLING": "1"
@@ -1087,306 +1176,315 @@
       "values": [
         {
           "value": "wakeup",
-          "description": "Wake up the car",
+          "description": "Réveiller le véhicule",
           "icon": "reveil.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=wake_up",
           "hidden": 1
         },
         {
           "value": "door_unlock",
-          "description": "Unlock doors",
+          "description": "Déverouiller le véhicule",
           "icon": "lock_disabled.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=door_unlock",
           "hidden": 1
         },
         {
           "value": "door_lock",
-          "description": "Lock doors",
+          "description": "Vérouiller le véhicule",
           "icon": "lock_enabled.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=door_lock",
           "hidden": 1
         },
         {
           "value": "flash_lights",
-          "description": "Flash lights",
+          "description": "Faire clignoter l'éclairage extérieur",
           "icon": "lamp_on.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=flash_lights",
           "hidden": 1
         },
         {
           "value": "honk_horn",
-          "description": "Honk horn",
+          "description": "Activer le klaxon",
           "icon": "siren_on.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=honk_horn",
           "hidden": 1
         },
         {
           "value": "charge_start",
-          "description": "Start charging",
+          "description": "Démarrer la recharge",
           "icon": "prise_b1.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=charge_start",
           "hidden": 1
         },
         {
           "value": "charge_stop",
-          "description": "Stop charging",
+          "description": "Arrêter la recharge",
           "icon": "prise_b2.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=charge_stop",
           "hidden": 1
         },
         {
           "value": "charge_port_door_open",
-          "description": "Open charge port door",
+          "description": "Ouvrir la trappe de la prise de recharge",
           "icon": "lock_disabled.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=charge_port_door_open",
           "hidden": 1
         },
         {
           "value": "charge_port_door_close",
-          "description": "Close charge port door",
+          "description": "Fermer la trappe de la prise de recharge",
           "icon": "lock_enabled.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=charge_port_door_close",
           "hidden": 1
         },
         {
           "value": "set_charge_limit_50",
-          "description": "Set charge limit to 50 %",
+          "description": "Régler la limite de recharge à 50 %",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C50",
           "hidden": 1
         },
         {
-          "value": "set_charge_limit_70",
-          "description": "Set charge limit to 70 %",
+          "value": "set_charge_limit_60",
+          "description": "Régler la limite de recharge à 60 %",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=set_charge_limit&actionparam=percent%2C60",
+          "hidden": 1
+        },
+        {
+          "value": "set_charge_limit_70",
+          "description": "Régler la limite de recharge à 70 %",
+          "icon": "volume.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C70",
           "hidden": 1
         },
         {
           "value": "set_charge_limit_75",
-          "description": "Set charge limit to 75 %",
+          "description": "Régler la limite de recharge à 75 %",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C75",
           "hidden": 1
         },
         {
           "value": "set_charge_limit_80",
-          "description": "Set charge limit to 80 %",
+          "description": "Régler la limite de recharge à 80 %",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C80",
           "hidden": 1
         },
         {
           "value": "set_charge_limit_85",
-          "description": "Set charge limit to 85 %",
+          "description": "Régler la limite de recharge à 85 %",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C85",
           "hidden": 1
         },
         {
           "value": "set_charge_limit_90",
-          "description": "Set charge limit to 90 %",
+          "description": "Régler la limite de recharge à 90 %",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C90",
           "hidden": 1
         },
         {
           "value": "set_charge_limit_95",
-          "description": "Set charge limit to 95 %",
+          "description": "Régler la limite de recharge à 95 %",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C95",
           "hidden": 1
         },
         {
           "value": "set_charge_limit_100",
-          "description": "Set charge limit to 100 %",
+          "description": "Régler la limite de recharge à 100 %",
           "icon": "volume.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charge_limit&actionparam=percent%2C100",
           "hidden": 1
         },
         {
           "value": "set_charge_amps_5",
-          "description": "Set charge rate to 5 A",
+          "description": "Régler le courant de recharge à 5 A",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C5",
           "hidden": 1
         },
         {
           "value": "set_charge_amps_8",
-          "description": "Set charge rate to 8 A",
+          "description": "Régler le courant de recharge à 8 A",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C8",
           "hidden": 1
         },
         {
           "value": "set_charge_amps_10",
-          "description": "Set charge rate to 10 A",
+          "description": "Régler le courant de recharge à 10 A",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C10",
           "hidden": 1
         },
         {
           "value": "set_charge_amps_13",
-          "description": "Set charge rate to 13 A",
+          "description": "Régler le courant de recharge à 13 A",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C13",
           "hidden": 1
         },
         {
           "value": "set_charge_amps_16",
-          "description": "Set charge rate to 16 A",
+          "description": "Régler le courant de recharge à 16 A",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C16",
           "hidden": 1
         },
         {
           "value": "set_charge_amps_24",
-          "description": "Set charge rate to 24 A",
+          "description": "Régler le courant de recharge à 24 A",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C24",
           "hidden": 1
         },
         {
           "value": "set_charge_amps_32",
-          "description": "Set charge rate to 32 A",
+          "description": "Régler le courant de recharge à 32 A",
           "icon": "consoelec.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_charging_amps&actionparam=charging_amps%2C32",
           "hidden": 1
         },
         {
           "value": "auto_conditioning_start",
-          "description": "Start heat and air conditioning",
+          "description": "Démarrer le chauffage et la climatisation",
           "icon": "fan_b1.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=auto_conditioning_start",
           "hidden": 1
         },
         {
           "value": "auto_conditioning_stop",
-          "description": "Stop heat and air conditioning",
+          "description": "Arrêter le chauffage et la climatisation",
           "icon": "fan_b2.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=auto_conditioning_stop",
           "hidden": 1
         },
         {
           "value": "remote_seat_heater_request_0_0",
-          "description": "Left seat heater : off",
+          "description": "Chauffage du siège gauche : off",
           "icon": "heater_0.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C0%2Clevel%2C0",
           "hidden": 1
         },
         {
           "value": "remote_seat_heater_request_0_1",
-          "description": "Left seat heater : level 1",
+          "description": "Chauffage du siège gauche : niveau 1",
           "icon": "heater_1.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C0%2Clevel%2C1",
           "hidden": 1
         },
         {
           "value": "remote_seat_heater_request_0_2",
-          "description": "Left seat heater : level 2",
+          "description": "Chauffage du siège gauche : niveau 2",
           "icon": "heater_2.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C0%2Clevel%2C2",
           "hidden": 1
         },
         {
           "value": "remote_seat_heater_request_0_3",
-          "description": "Left seat heater : level 3",
+          "description": "Chauffage du siège gauche : niveau 3",
           "icon": "heater_3.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C0%2Clevel%2C3",
           "hidden": 1
         },
         {
           "value": "remote_seat_heater_request_1_0",
-          "description": "Right seat heater : off",
+          "description": "Chauffage du siège droit : off",
           "icon": "heater_0.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C1%2Clevel%2C0",
           "hidden": 1
         },
         {
           "value": "remote_seat_heater_request_1_1",
-          "description": "Right seat heater : level 1",
+          "description": "Chauffage du siège droit : niveau 1",
           "icon": "heater_1.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C1%2Clevel%2C1",
           "hidden": 1
         },
         {
           "value": "remote_seat_heater_request_1_2",
-          "description": "Right seat heater : level 2",
+          "description": "Chauffage du siège droit : niveau 2",
           "icon": "heater_2.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C1%2Clevel%2C2",
           "hidden": 1
         },
         {
           "value": "remote_seat_heater_request_1_3",
-          "description": "Right seat heater : level 3",
+          "description": "Chauffage du siège droit : niveau 3",
           "icon": "heater_3.png",
-          "http_url": "http://localhost/script/?exec=tesla_oauth.php&id=[VAR2]",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C1%2Clevel%2C3",
           "hidden": 1

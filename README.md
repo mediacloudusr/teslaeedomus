@@ -6,7 +6,7 @@ This plugin was developped by [mediacloud](https://forum.eedomus.com/ucp.php?i=p
 
 See this [forum thread](https://forum.eedomus.com/viewtopic.php?f=16&t=10515) for more information or for feedback.
 
-Current version is v 1.6.1.
+Current version is v 1.7.0.
 
 ## Features
 
@@ -14,7 +14,7 @@ Current version is v 1.6.1.
 
 The plugin reports the following data to Eedomus :
 
-- geolocalisation of the car
+- geolocalisation of the car, latitude, longitude
 - car state (asleep, online)
 - doors state
 - heat and air conditionning state
@@ -75,7 +75,7 @@ The plugin needs a code to retrieve the tokens. To obtain this code, do the foll
 
 - Click on the link in the plugin installation page to authenticate with your Tesla account
 
-![auth url](https://user-images.githubusercontent.com/94607717/144481095-e7c54f83-dd18-4d6d-8318-850c501ef9b3.png)
+![auth url](https://user-images.githubusercontent.com/94607717/145652408-0ef6997a-2e09-488b-b20e-865d447673cd.png)
 
 - Your browser will go to the Tesla web site and you will login with your Tesla account.
 - When it's done, a "Page Not Found" will be displayed by Tesla. This is expected. Inspect the URL and extract the **code** parameter from it (everything after `code=` and before the next `&`)
@@ -84,11 +84,11 @@ The plugin needs a code to retrieve the tokens. To obtain this code, do the foll
 
 - Code is valid 2 minutes. Paste it to the corresponding field in the plugin installation page.
 
-![code paste](https://user-images.githubusercontent.com/94607717/144481146-d171ace8-56f7-43d1-8b79-e8a90a543a62.png)
+![code paste](https://user-images.githubusercontent.com/94607717/145652411-b6b1fdd5-3a1d-4a70-b478-80eb92a34046.png)
 
-### Vehicle id
+### VIN
 
-By default, the plugin uses the first vehicle of your account. You can force a specific vehicle if needed by providing its id.
+By default, the plugin uses the first vehicle of your account. You can force a specific vehicle by providing its VIN.
 
 ### Creation
 
