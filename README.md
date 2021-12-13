@@ -6,7 +6,7 @@ This plugin was developped by [mediacloud](https://forum.eedomus.com/ucp.php?i=p
 
 See this [forum thread](https://forum.eedomus.com/viewtopic.php?f=16&t=10515) for more information or for feedback.
 
-Current version is v 1.7.0.
+Current version is v 1.7.1.
 
 ## Features
 
@@ -15,7 +15,7 @@ Current version is v 1.7.0.
 The plugin reports the following data to Eedomus :
 
 - geolocalisation of the car, latitude, longitude
-- car state (asleep, online)
+- car state (asleep, online, offline)
 - doors state
 - heat and air conditionning state
 - left and right seat heater state
@@ -24,8 +24,8 @@ The plugin reports the following data to Eedomus :
 - energy added
 - charge port door status
 - charging state
-- minutes to full charge
-- time to full charge (h min)
+- minutes to charge to limit
+- time to charge to limit (h min)
 - charge rate
 - charger voltage
 - charger power
