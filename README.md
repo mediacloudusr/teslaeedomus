@@ -1,110 +1,110 @@
-# Tesla Car Application for Eedomus
+# Plugin Véhicule Tesla pour Eedomus
 
-Follow your Tesla car with this plugin for [Eedomus](https://www.eedomus.com/).
+Suivez les paramètres de votre véhicule Tesla avec ce plugin pour [Eedomus](https://www.eedomus.com/).
 
-This plugin was developped by [mediacloud](https://forum.eedomus.com/ucp.php?i=pm&mode=compose&u=5280).
+Ce plugin a été développé par [mediacloud](https://forum.eedomus.com/ucp.php?i=pm&mode=compose&u=5280).
 
-See this [forum thread](https://forum.eedomus.com/viewtopic.php?f=16&t=10515) for more information or for feedback.
+Voir la [discussion sur le forum](https://forum.eedomus.com/viewtopic.php?f=16&t=10515) for more information or for feedback.
 
-Current version is v 1.7.1.
+La version actuelle est 1.7.1.
 
-## Features
+## Fonctionnalités
 
 ![tesla car overview](https://user-images.githubusercontent.com/94607717/144480490-5f20b465-0030-4763-853d-096b30bf684f.png)
 
-The plugin reports the following data to Eedomus :
+Ce plugin envoie les données suivantes à Eedomus :
 
-- geolocalisation of the car, latitude, longitude
-- car state (asleep, online, offline)
-- doors state
-- heat and air conditionning state
-- left and right seat heater state
-- battery level
-- limit soc
-- energy added
-- charge port door status
-- charging state
-- minutes to charge to limit
-- time to charge to limit (h min)
-- charge rate
-- charger voltage
-- charger power
-- charge limit defined
-- charge energy added (kWh, cost)
-- charging state
-- battery range
-- estimated battery range
-- outside temperature
-- inside temperature
-- odometer
-- lock state
-- vehicle name
-- shift state
-- speed
-- sentinel (sentry) state
+- localisation du véhicule, latitude, longitude
+- niveau de la batterie
+- limite de recharge
+- énergie ajoutée (kWh, coût)
+- état de la trappe de la prise
+- état de la recharge
+- minutes de recharge restantes
+- temps de recharge restant (h min)
+- courant de recharge
+- limite du courant de recharge
+- tension de recharge
+- puissance de recharge
+- autonomie restante (théorique)
+- autonomie restante (estimée)
+- température extérieure
+- température intérieure
+- état du chauffage et climatisation
+- état du chauffage du siège gauche et droit
+- compteur kilométrique
+- verrouillage du véhicule
+- nom du véhicule
+- levier de vitesse
+- vitesse
+- sentinelle
 
 ![tesla car actions](https://user-images.githubusercontent.com/94607717/143620966-adb1b4a2-d270-4eeb-ae6b-5c9a7aa78c9f.png)
 
-It exposes the following commands which can be used in rules :
+Il expose les commandes suivantes (qui peuvent être utilisées dans les règles) :
 
-- wake_up
-- start/stop heat and air conditionning
-- start/stop left and right seat heaters and set level (prerequisite : heat and air conditionning should be On)
-- lock/unlock doors
-- flash lights
-- honk horn
-- start/stop charging
-- open/close charge port door
-- set charge rate (A)
-- set charge limit (%)
-- start/stop sentinel
+- réveiller le véhicule
+- verrouiller/déverrouiller le véhicule
+- faire clignoter l'éclairage extérieur
+- activer le klaxon
+- démarrer/arrêter la recharge
+- ouvrir/fermer la trappe de la prise de recharge
+- régler la limite de recharge (50%, 60%, 70%, 75%, 80%, 85%, 90%, 95%, 100%)
+- régler le courant de recharge (5A, 8A, 10A, 13A, 16A, 20A, 24A, 28A, 32A)
+- démarrer/arrêter le chauffage et la climatisation
+- régler le chauffage du siège gauche et droit
+- activer/désactiver Sentinelle
 
-Note : each command calls the 'wake_up' command before, if needed.
+Note : chaque commande réveille le véhicule si nécessaire.
 
-## Installation and configuration
+## Installation et configuration
 
-Install the plugin from the Eedomus store.
+Installez le plugin depuis le store Eedomus.
 
-It is recommended to have your Tesla car awake when you install the plug-in. To awake tour car, launch the Tesla App on your phone, or open/close a door.
+Il est recommandé d'avoir votre voiture Tesla réveillé lorsque vous installez le plugin. Pour réveiller le véhicule, lancez l'application Tesla sur votre téléphone, ou ouvrez/fermez une portière.
 
-### Code and authentication
+### Pièce
 
-The plug-in will get automatically the access token using the Tesla backend. It will renew it automatically every 8 hours.
+Créer une pièce pour y affecter le véhicule Tesla.
 
-The plugin needs a code to retrieve the tokens. To obtain this code, do the following :
+### Code et authentification
 
-- Click on the link in the plugin installation page to authenticate with your Tesla account
+Le plugin récupèrera automatique le jeton d'accès en se connectant au serveurs Tesla. Il sera renouvelé automatiquement toutes les 8 heures.
+
+Le plugin a besoin d'un code pour récupérer le premier jeton. Pour obtenir le code :
+
+- Cliquez sur le lien pour vous connecter avec votre compte Tesla
 
 ![auth url](https://user-images.githubusercontent.com/94607717/145652408-0ef6997a-2e09-488b-b20e-865d447673cd.png)
 
-- Your browser will go to the Tesla web site and you will login with your Tesla account.
-- When it's done, a "Page Not Found" will be displayed by Tesla. This is expected. Inspect the URL and extract the **code** parameter from it (everything after `code=` and before the next `&`)
+- Connectez-vous au site Tesla avec votre compte
+- Une fois fait, une page "Page Not Found" sera affichée. C'est normal. Regardez l'URL et récupérer le paramètre **code** (texte après `code=` et jusqu'au `&`)
 
 ![auth url](https://user-images.githubusercontent.com/94607717/144481395-b52b58f2-90b6-42c3-9f9a-4202525e1cca.png)
 
-- Code is valid 2 minutes. Paste it to the corresponding field in the plugin installation page.
+- Le code est valide 2 minutes. Copiez le dans la paramètre correspondant du plugin.
 
 ![code paste](https://user-images.githubusercontent.com/94607717/145652411-b6b1fdd5-3a1d-4a70-b478-80eb92a34046.png)
 
 ### VIN
 
-By default, the plugin uses the first vehicle of your account. You can force a specific vehicle by providing its VIN.
+Par défaut, le plugin sélectionne le premier véhicule du compte. Vous pouvez sélectionner un autre véhicule de votre compte en fournissant son VIN.
 
-### Creation
+### Création
 
-Click on create.
-Then you can go the Tesla room. You should see the data a few seconds after (if the car is awake).
+Cliquez sur `Créer`.
+Allez ensuite dans la pièce Tesla. Vous devriez voir les données quelques secondes après (si le véhicule est réveillé).
 
-## Note on polling interval and battery drain
+## Notes sur les intervalles de connexion et l'impact sur la batterie
 
-There are optimizations in the plugin to avoid battery drain. Here are some details :
+Il y a des optimisations dans le plugin pour éviter de vider la batterie. Voici quelques détails :
 
-- Polling interval is from 2 to 5 minutes for the meters but there is a data cache of 15 minutes in the script to allow the car go to sleep. So the data reported can be 15 min late, including for the geolocation data.
-- When the car is asleep, car general data and GPS data are retrieved every 15 minutes but data will be empty (or the same) as the car is asleep. There is an exception for the **car state** which uses a different API : state is always updated every 3 minutes.
-- When car is active (air conditioning is on, charging happening, car is not parked, or sentinel is on), then monitoring is done every 3 minutes. If the car seems inactive for 10 minutes, the monitoring switch back to every 15 minutes so the car can go asleep.
+- L'intervalle d'interrogation est de 1 à 3 minutes pour les compteurs mais il y a un cache de données de 15 minutes dans le script pour permettre à la voiture de se mettre en veille. Les données rapportées peuvent donc avoir 15 min de retard, y compris pour les données de géolocalisation.
+- Lorsque la voiture est endormie, les données générales de la voiture et les données GPS sont récupérées toutes les 15 minutes mais les données seront vides (ou identiques) car la voiture est endormie. Il y a une exception pour l'**état de la voiture** qui utilise une API différente : l'état est toujours mis à jour toutes les 3 minutes.
+- Lorsque la voiture est active (la climatisation est en marche, la charge est en cours, la voiture n'est pas garée ou la sentinelle est activée), le suivi est effectué toutes les 3 minutes. Si la voiture semble inactive pendant 10 minutes, la surveillance revient à toutes les 15 minutes pour que la voiture puisse s'endormir.
 
-## Note on electricity price
+## Note sur le prix de l'électricité
 
-You can modify the price per kWh in the configuration of the 'Charge energy added (cost)" meter. Update the value in the XPATH expression.
+Vous pouvez modifier le prix du kWh dans la configuration du compteur "Energie ajoutée (coût)". Mettez à jour la valeur dans l'expression XPATH.
 
 ![cost](https://user-images.githubusercontent.com/94607717/144512926-09530b1b-6056-4e5a-8109-d33c3a625384.png)
