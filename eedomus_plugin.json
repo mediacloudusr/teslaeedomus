@@ -301,7 +301,7 @@
           "description": "En ligne"
         },
         {
-          "value": "offine",
+          "value": "offline",
           "icon": "heartbeat_c2.png",
           "description": "Hors ligne"
         }

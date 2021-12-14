@@ -10,7 +10,7 @@ La version actuelle est 1.7.1.
 
 ## Fonctionnalités
 
-![tesla car overview](https://user-images.githubusercontent.com/94607717/144480490-5f20b465-0030-4763-853d-096b30bf684f.png)
+![tesla car overview](https://user-images.githubusercontent.com/94607717/145950751-715d7029-d674-4ff6-bfa9-946e81c59a48.png)
 
 Ce plugin envoie les données suivantes à Eedomus :
 
