@@ -524,7 +524,7 @@
         },
         {
           "value": "Stopped",
-          "description": "Stoppée",
+          "description": "Arrêtée",
           "icon": "prise_b2.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
@@ -848,7 +848,7 @@
       "values": [
         {
           "value": "true",
-          "description": "On",
+          "description": "Marche",
           "icon": "fan_b1.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
@@ -856,7 +856,7 @@
         },
         {
           "value": "false",
-          "description": "Off",
+          "description": "Arrêt",
           "icon": "fan_b2.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
@@ -886,7 +886,7 @@
       "values": [
         {
           "value": "0",
-          "description": "Off",
+          "description": "Arrêt",
           "icon": "heater_0.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
@@ -894,7 +894,7 @@
         },
         {
           "value": "1",
-          "description": "On - niveau 1",
+          "description": "Marche - niveau 1",
           "icon": "heater_1.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
@@ -902,7 +902,7 @@
         },
         {
           "value": "2",
-          "description": "On - niveau 2",
+          "description": "Marche - niveau 2",
           "icon": "heater_2.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
@@ -910,7 +910,7 @@
         },
         {
           "value": "3",
-          "description": "On - niveau 3",
+          "description": "Marche - niveau 3",
           "icon": "heater_3.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
@@ -940,7 +940,7 @@
       "values": [
         {
           "value": "0",
-          "description": "Off",
+          "description": "Arrêt",
           "icon": "heater_0.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
@@ -948,7 +948,7 @@
         },
         {
           "value": "1",
-          "description": "On - niveau 1",
+          "description": "Marche - niveau 1",
           "icon": "heater_1.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
@@ -956,7 +956,7 @@
         },
         {
           "value": "2",
-          "description": "On - niveau 2",
+          "description": "Marche - niveau 2",
           "icon": "heater_2.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
@@ -964,7 +964,7 @@
         },
         {
           "value": "3",
-          "description": "On - niveau 3",
+          "description": "Marche - niveau 3",
           "icon": "heater_3.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
@@ -982,6 +982,7 @@
       "name_en": "plugin.name - Odometer",
       "utilisation_id": "35",
       "value_unit": "km",
+      "icon": "motor.png",
       "parameters": {
         "VAR1": "plugin.parameters.code",
         "VAR2": "plugin.parameters.vin",
@@ -1064,12 +1065,34 @@
       "parameters": {
         "VAR1": "plugin.parameters.code",
         "VAR2": "plugin.parameters.vin",
-        "value_type": "string",
+        "value_type": "list",
         "ignore_errors": 1,
         "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/shift_state",
         "POLLING": "3"
-      }
+      },
+      "values": [
+        {
+          "value": "D",
+          "description": "D",
+          "icon": "right.png"
+        },
+        {
+          "value": "P",
+          "description": "P",
+          "icon": "pause.png"
+        },
+        {
+          "value": "N",
+          "description": "N",
+          "icon": "left_right.png"
+        },
+        {
+          "value": "R",
+          "description": "R",
+          "icon": "left.png"
+        }
+      ]
     },
     {
       "device_id": "drive_state_speed",
@@ -1081,6 +1104,7 @@
       "name_en": "plugin.name - Speed",
       "utilisation_id": "29",
       "value_unit": "km/h",
+      "icon": "compteurelec64b.png",
       "parameters": {
         "VAR1": "plugin.parameters.code",
         "VAR2": "plugin.parameters.vin",
@@ -1112,7 +1136,7 @@
       "values": [
         {
           "value": "true",
-          "description": "On",
+          "description": "Marche",
           "icon": "camera_b1.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
@@ -1120,7 +1144,7 @@
         },
         {
           "value": "false",
-          "description": "Off",
+          "description": "Arrêt",
           "icon": "camera_b2.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
@@ -1136,7 +1160,7 @@
       "type": "http",
       "name_fr": "plugin.name - Commandes",
       "name_en": "plugin.name - Commands",
-      "icon": "motor.png",
+      "icon": "pilotage.png",
       "value_type": "list",
       "utilisation_id": "43",
       "visible": "0",
@@ -1411,7 +1435,7 @@
         },
         {
           "value": "remote_seat_heater_request_0_0",
-          "description": "Chauffage du siège gauche : off",
+          "description": "Chauffage du siège gauche : arrêt",
           "icon": "heater_0.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
@@ -1447,7 +1471,7 @@
         },
         {
           "value": "remote_seat_heater_request_1_0",
-          "description": "Chauffage du siège droit : off",
+          "description": "Chauffage du siège droit : arrêt",
           "icon": "heater_0.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
