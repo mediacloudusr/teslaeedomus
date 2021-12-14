@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with This program. If not, see <http://www.gnu.org/licenses/>.
 #
-# v1.7.0
+# v1.7.1
 
 /////////////////////////////////////////////////////////////////////////
 // Constants
@@ -117,18 +117,6 @@ function sdk_get_car_state($api_url, $id, $headers)
 		}
 		return $paramsvehicles['response'];
 	}
-}
-
-function sdk_get_gps_state($api_url, $id, $headers)
-{
-	// get GPS data
-	$myurlgetgps = $api_url . 'api/1/vehicles/' . $id . '/data_request/drive_state';
-	$responsegps = httpQuery($myurlgetgps, 'GET', NULL, NULL, $headers);
-	$paramsgps = sdk_json_decode(utf8_encode($responsegps));
-	if ($paramsgps['error'] != '') {
-		die("Error when getting gps data: " . $paramsgps['error']);
-	}
-	return $paramsgps['response'];
 }
 
 function sdk_get_charge_state($api_url, $id, $headers)
@@ -253,6 +241,7 @@ function sdk_get_token($url, $paramjson, $tokentype)
 /////////////////////////////////////////////////////////////////////////
 
 // First time or new code, so let's get the refresh token from the code
+
 if ($action == 'get_state_data' && !empty($code) &&  ($code_saved != $code || (empty($refresh_token)))) {
 
 	$parentId = sdk_get_id_of_parent_control($moduleId);
@@ -283,7 +272,7 @@ if ($action == 'get_state_data' && !empty($code) &&  ($code_saved != $code || (e
 
 
 // new access token when it is expired
-if ($action == 'get_state_data' ||  (empty($access_token) || empty($access_token_start_time) ||  ((time() - $access_token_start_time) / 60 > ($access_token_duration - 10)))) { // token age is more than 8 hours minus 10 min
+if ($action == 'get_state_data' &&  (empty($access_token) || empty($access_token_start_time) ||  ((time() - $access_token_start_time) / 60 > ($access_token_duration - 10)))) { // token age is more than 8 hours minus 10 min
 	$headers_refresh = array("Content-Type: application/json");
 	$text_json = '{ "grant_type": "refresh_token",
 	"client_id": "ownerapi",
@@ -309,8 +298,6 @@ if (!empty($id_saved)) {
 if (empty($id)) {  // no id saved.
 	$id = sdk_get_car_id($api_url, $vin, $headers);
 }
-
-// echo $id;
 
 $vehiclestate = '';
 $vehiclestatestate = '';
@@ -426,30 +413,24 @@ switch ($action) {
 		if ($cached_vehiclestatestate == 'online') {
 
 			// Return cache ?
-			$last_gps_success = loadVariable('last_gps_success_' . $vin);
-			$cached_vehiclestatestate_for_gps = loadVariable('cached_vehiclestatestate_for_gps_' . $vin);
+			$paramsgps = loadVariable('cached_vehicle_data_' . $vin);
+			$paramsgps = $paramsgps['drive_state'];
 
-			// let's interrogate GPS only when needed and let the car to to sleep
-			if ($nocache != 'true') {
-				if (!empty($cached_vehiclestatestate_for_gps) && !empty($last_gps_success) && ($cached_vehiclestatestate_for_gps == $vehiclestatestate) && ((time() - $last_gps_success) / 60 < $CACHE)) {
-					sdk_header('text/xml');
-					$cached_gps_xml = loadVariable('cached_gps_xml_' . $vin);
-					echo $cached_gps_xml;
-					die();
-				}
+			if (empty($paramsgps)) {
+				die();
 			}
 
 			// id of parent control, used to send GPS data
 			$parentid = sdk_get_id_of_parent_control($moduleId);
 
 			// get GPS data
-			$paramsgps = sdk_get_gps_state($api_url, $id, $headers);
+			// $paramsgps = sdk_get_gps_state($api_url, $id, $headers);
 			$latitude = $paramsgps['latitude'];
 			$longitude = $paramsgps['longitude'];
 
 			// updating position channel
 			setValue($parentid, $latitude . ',' . $longitude);
-			saveVariable('last_gps_success_' . $vin, time());
+			//saveVariable('last_gps_success_' . $vin, time());
 			sdk_header('text/xml');
 			$gps_xml = '<root>
 <cached>0</cached>
@@ -460,9 +441,9 @@ switch ($action) {
 <positionmoduleid>' . $parentid . '</positionmoduleid>
 </root>';
 			echo $gps_xml;
-			$gps_xml = str_replace('<cached>0</cached>', '<cached>1</cached>', $gps_xml);
-			saveVariable('cached_gps_xml_' . $vin, $gps_xml);
-			saveVariable('cached_vehiclestatestate_for_gps_' . $vin, $vehiclestatestate);
+			// $gps_xml = str_replace('<cached>0</cached>', '<cached>1</cached>', $gps_xml);
+			//saveVariable('cached_gps_xml_' . $vin, $gps_xml);
+			// saveVariable('cached_vehiclestatestate_for_gps_' . $vin, $vehiclestatestate);
 		} else {
 			echo 'Vehicle is not online';
 		}
@@ -481,6 +462,7 @@ if ($nocache != 'true') {
 		sdk_header('text/xml');
 		$cached_xml = loadVariable('cached_xml_' . $vin);
 		echo $cached_xml;
+
 		die();
 	}
 }
@@ -564,6 +546,8 @@ $cached_xml = str_replace('<cached>0</cached>', '<cached>1</cached>', $cached_xm
 saveVariable('last_xml_success_' . $vin, time());
 saveVariable('cached_xml_' . $vin, $cached_xml);
 saveVariable('cached_id_' . $vin, $id);
+saveVariable('cached_vehicle_data_' . $vin, $paramResponse);
+// $paramResponse
 
 // if shift state is D N R or, or if car is charging, or if air conditionning is on, then store the time to continue do active monitoring
 if ($paramResponse['drive_state']['shift_state'] != null || $paramResponse['charge_state']['charger_power'] > 0 || $isclimateon == "true" || $sentrymode == "true") {
