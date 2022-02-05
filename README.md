@@ -4,9 +4,9 @@ Suivez les paramètres de votre véhicule Tesla avec ce plugin pour [Eedomus](http
 
 Ce plugin a été développé par [mediacloud](https://forum.eedomus.com/ucp.php?i=pm&mode=compose&u=5280).
 
-Voir la [discussion sur le forum](https://forum.eedomus.com/viewtopic.php?f=16&t=10515) for more information or for feedback.
+Voir la [discussion sur le forum](https://forum.eedomus.com/viewtopic.php?f=16&t=10515) pour plus d'informations ou donner un feedback.
 
-La version actuelle est 1.7.1.
+La version actuelle est 1.8.0.
 
 ## Fonctionnalités
 
@@ -31,13 +31,16 @@ Ce plugin envoie les données suivantes à Eedomus :
 - température extérieure
 - température intérieure
 - état du chauffage et climatisation
-- état du chauffage du siège gauche et droit
+- état du chauffage du siège gauche, droit, arrière gauche, droit et central
+- état du chauffage du volant
 - compteur kilométrique
 - verrouillage du véhicule
 - nom du véhicule
 - levier de vitesse
 - vitesse
 - sentinelle
+- état du démarrage à distance
+- état du coffre arrière et avant
 
 ![tesla car actions](https://user-images.githubusercontent.com/94607717/145906384-73e170f4-7d2a-4093-a844-692092e90d8a.png)
 
@@ -52,8 +55,10 @@ Il expose les commandes suivantes (qui peuvent être utilisées dans les règles) :
 - régler la limite de recharge (50%, 60%, 70%, 75%, 80%, 85%, 90%, 95%, 100%)
 - régler le courant de recharge (5A, 8A, 10A, 13A, 16A, 20A, 24A, 28A, 32A)
 - démarrer/arrêter le chauffage et la climatisation
-- régler le chauffage du siège gauche et droit
+- régler le chauffage des sièges et du volant
 - activer/désactiver Sentinelle
+- démarrage à distance
+- ouverture des coffres arrières et avant
 
 Note : chaque commande réveille le véhicule si nécessaire.
 
@@ -65,7 +70,7 @@ Il est recommandé d'avoir votre voiture Tesla réveillé lorsque vous installez le
 
 ### Pièce
 
-Créer une pièce pour y affecter le véhicule Tesla.
+Créer une pièce 'Tesla' pour y affecter le véhicule Tesla.
 
 ### Code et authentification
 
@@ -108,3 +113,11 @@ Il y a des optimisations dans le plugin pour éviter de vider la batterie. Voici 
 Vous pouvez modifier le prix du kWh dans la configuration du compteur "Energie ajoutée (coût)". Mettez à jour la valeur dans l'expression XPATH.
 
 ![cost](https://user-images.githubusercontent.com/94607717/145906757-6c79004c-3f3a-4b1c-a600-6c80a0b37ce3.png)
+
+## Note sur HomeKit/Siri
+
+Le plugin a été testé avec Home Kit. Certains paramètres et commandes peuvent être pilotés avec Siri. Après configuration, il est possible d'utiliser les phrases suivantes :
+"Dis Siri, active le chauffage de la Tesla"
+"Dis Siri, active le démarrage à distance de la Tesla"
+"Dis Siri, éteins le chauffage de la Tesla"
+"Dis Siri, quelle est la température intérieure de la Tesla"
