@@ -117,7 +117,8 @@ Vous pouvez modifier le prix du kWh dans la configuration du compteur "Energie a
 ## Note sur HomeKit/Siri
 
 Le plugin a été testé avec Home Kit. Certains paramètres et commandes peuvent être pilotés avec Siri. Après configuration, il est possible d'utiliser les phrases suivantes :
-"Dis Siri, active le chauffage de la Tesla"
-"Dis Siri, active le démarrage à distance de la Tesla"
-"Dis Siri, éteins le chauffage de la Tesla"
-"Dis Siri, quelle est la température intérieure de la Tesla"
+
+- "Dis Siri, active le chauffage de la Tesla"
+- "Dis Siri, active le démarrage à distance de la Tesla"
+- "Dis Siri, éteins le chauffage de la Tesla"
+- "Dis Siri, quelle est la température intérieure de la Tesla"
