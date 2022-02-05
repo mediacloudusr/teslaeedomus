@@ -1,7 +1,7 @@
 <?php
 # This file is part of Tesla Car Plugin for Eedomus <https://github.com/mediacloudusr/teslaeedomus>.
 # It connects to the Tesla API and reports back data to Eedomus.
-# Copyright (C) 2021 mediacloud (https://forum.eedomus.com/ucp.php?i=pm&mode=compose&u=5280)
+# Copyright (C) 2022 mediacloud (https://forum.eedomus.com/ucp.php?i=pm&mode=compose&u=5280)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with This program. If not, see <http://www.gnu.org/licenses/>.
 #
-# v1.7.1
+# v1.8.0
 
 /////////////////////////////////////////////////////////////////////////
 // Constants
@@ -57,6 +57,7 @@ function sdk_get_car_id($api_url, $vin, $headers)
 
 	// this API call should not awake the car
 	$response = httpQuery($myurlget, 'GET', NULL, NULL, $headers);
+
 	$paramsvehicles = sdk_json_decode($response);
 
 	if ($paramsvehicles['error'] != '') {
@@ -124,6 +125,7 @@ function sdk_get_charge_state($api_url, $id, $headers)
 	// get GPS data
 	$myurlgetgps = $api_url . 'api/1/vehicles/' . $id . '/data_request/charge_state';
 	$responsegps = httpQuery($myurlgetgps, 'GET', NULL, NULL, $headers);
+
 	$paramsgps = sdk_json_decode(utf8_encode($responsegps));
 	if ($paramsgps['error'] != '') {
 		die("Error when getting charge data: " . $paramsgps['error']);
@@ -136,6 +138,7 @@ function sdk_wake_up_and_wait($api_url, $id, $vin, $headers, $die = true)
 	// wake_up the car
 	$myurlpost = $api_url . 'api/1/vehicles/' . $id . '/wake_up';
 	$response = httpQuery($myurlpost, 'POST', NULL, NULL, $headers);
+
 	$paramsWakeup = sdk_json_decode($response);
 
 	if ($paramsWakeup['error'] != '') {
@@ -230,6 +233,7 @@ function sdk_get_token($url, $paramjson, $tokentype)
 	$myurlpost = $url . 'oauth2/v3/token';
 	$response = httpQuery($myurlpost, 'POST', $paramjson, NULL, $headers_refresh);
 	$paramsToken = sdk_json_decode($response);
+
 	if (!empty($paramsToken['error'])) {
 		die("Error when getting the $tokentype access token : " . $paramsToken['error']);
 	}
@@ -242,61 +246,72 @@ function sdk_get_token($url, $paramjson, $tokentype)
 
 // First time or new code, so let's get the refresh token from the code
 
-if ($action == 'get_state_data' && !empty($code) &&  ($code_saved != $code || (empty($refresh_token)))) {
+$token_is_renewed = false;
 
-	$parentId = sdk_get_id_of_parent_control($moduleId);
-	// let's make the code verifier the same than the one generated in the register script 
-	$code_verifier = $parentId . substr($code_verifier, 0, 86 - strlen($parentId));
+if ($action == 'get_state_data') {
+	if (!empty($code) &&  ($code_saved != $code || (empty($refresh_token)))) {
 
-	$text_json = '{ "grant_type": "authorization_code",
-	"client_id": "ownerapi",
-	"code": "' . $code . '",
-	"code_verifier": "' . $code_verifier . '",
-	"redirect_uri" : "https://auth.tesla.com/void/callback" }';
+		$parentId = sdk_get_id_of_parent_control($moduleId);
+		// let's make the code verifier the same than the one generated in the register script 
+		$code_verifier = $parentId . substr($code_verifier, 0, 86 - strlen($parentId));
 
-	$paramsToken = sdk_get_token($api_auth_url, $text_json, 'first');
+		$text_json = '{ "grant_type": "authorization_code",
+		"client_id": "ownerapi",
+		"code": "' . $code . '",
+		"code_verifier": "' . $code_verifier . '",
+		"redirect_uri" : "https://auth.tesla.com/void/callback" }';
 
-	$refresh_token = $paramsToken['refresh_token'];
-	saveVariable('refresh_token', $refresh_token);
-	$access_token = $paramsToken['access_token'];
-	$access_token_start_time = time();
-	saveVariable('access_token_start_time', $access_token_start_time);
-	saveVariable('access_token', $access_token);
+		$paramsToken = sdk_get_token($api_auth_url, $text_json, 'first');
 
-	saveVariable('code_' . $vin, $code); // we used it to detect new code !
+		$refresh_token = $paramsToken['refresh_token'];
+		saveVariable('refresh_token', $refresh_token);
+		$access_token = $paramsToken['access_token'];
+		$access_token_start_time = time();
+		saveVariable('access_token_start_time', $access_token_start_time);
+		saveVariable('access_token', $access_token);
 
-	// cleaning of variables
-	saveVariable('monitor_mode_' . $vin, '');
-	saveVariable('time_when_car_was_active_' . $vin, '');
+		saveVariable('code_' . $vin, $code); // we used it to detect new code !
+
+		// cleaning of variables
+		saveVariable('monitor_mode_' . $vin, '');
+		saveVariable('time_when_car_was_active_' . $vin, '');
+	}
+
+	// new access token when it is expired
+	if ((empty($access_token) || empty($access_token_start_time) ||  ((time() - $access_token_start_time) / 60 > ($access_token_duration - 10)))) { // token age is more than 8 hours minus 10 min
+		$headers_refresh = array("Content-Type: application/json");
+		$text_json = '{ "grant_type": "refresh_token",
+		"client_id": "ownerapi",
+		"scope": "openid email offline_access",
+		"refresh_token" : "' . $refresh_token . '" }';
+
+		$paramsToken = sdk_get_token($api_auth_url, $text_json, 'renewable');
+
+		saveVariable('access_token_start_time', time());
+		$access_token = $paramsToken['access_token'];
+		saveVariable('access_token', $access_token);
+		$token_is_renewed = true;
+	}
 }
 
-
-// new access token when it is expired
-if ($action == 'get_state_data' &&  (empty($access_token) || empty($access_token_start_time) ||  ((time() - $access_token_start_time) / 60 > ($access_token_duration - 10)))) { // token age is more than 8 hours minus 10 min
-	$headers_refresh = array("Content-Type: application/json");
-	$text_json = '{ "grant_type": "refresh_token",
-	"client_id": "ownerapi",
-	"scope": "openid email offline_access",
-	"refresh_token" : "' . $refresh_token . '" }';
-
-	$paramsToken = sdk_get_token($api_auth_url, $text_json, 'renewable');
-
-	saveVariable('access_token_start_time', time());
-	$access_token = $paramsToken['access_token'];
-	saveVariable('access_token', $access_token);
+if (empty($access_token)) {
+	die("No valid access token");
 }
 
 $headers = array("Authorization: Bearer " . $access_token, "Content-Type: application/json");
 
 $id = '';
 // Id of vehicle if auto mode. Let's get the saved one or uses the one provided by the user, or redetect it
+// Warning : the Id can change over time... may be when there is a software update....
 $id_saved = loadVariable('cached_id_' . $vin);
 if (!empty($id_saved)) {
 	$id = $id_saved;
 }
 
-if (empty($id)) {  // no id saved.
+if ($token_is_renewed || empty($id)) {  // token just renewed ir no id saved.
+	// let's refresh the Id to make sure as it can change over time
 	$id = sdk_get_car_id($api_url, $vin, $headers);
+	saveVariable('cached_id_' . $vin, $id);
 }
 
 $vehiclestate = '';
@@ -307,7 +322,7 @@ $monitor_mode = loadVariable('monitor_mode_' . $vin); // 'asleep' (monitor every
 $time_when_car_was_active = loadVariable('time_when_car_was_active_' . $vin); // when we are in active mode, let's store when shift is not null or charge active to switch back to asleep mode after no activity for 10 minutes ($WAIT_TO_SWITCH_TO_ASLEEP)
 
 // Cache duration definition
-if ($monitor_mode == 'active') {
+if ($monitor_mode == 'active' || $monitor_mode == '') {
 	$CACHE = $CACHE_DURATION_ACTIVE;
 } else {
 	$CACHE = $CACHE_DURATION;
@@ -331,15 +346,32 @@ switch ($action) {
 	case 'charge_stop':
 	case 'charge_port_door_open':
 	case 'charge_port_door_close':
+	case 'remote_start_drive':
 		sdk_action_on_car($api_url, $id, $vin, $headers, $action, null, false);
-		$nocache = 'true';
 		break;
 
 	case 'remote_seat_heater_request':
 		$actionparam = getArg('actionparam', true);
 		$arg = explode(",", $actionparam);
 		$text_json    = '{ "' . $arg[0] . '": ' . $arg[1] . ', "' . $arg[2] . '": ' . $arg[3] . '}';
-		sdk_action_on_car($api_url, $id, $vin, $headers, $action, $text_json);
+		sdk_action_on_car($api_url, $id, $vin, $headers, $action, $text_json, false);
+		// code continue to report data as xml
+		break;
+
+	case 'remote_steering_wheel_heater_request':
+		$actionparam = getArg('actionparam', true);
+		$arg = explode(",", $actionparam);
+		$text_json    = '{ "' . $arg[0] . '": ' . $arg[1] .  '}';
+		sdk_action_on_car($api_url, $id, $vin, $headers, $action, $text_json, false);
+		// code continue to report data as xml
+		break;
+
+	case 'actuate_trunk';
+		$actionparam = getArg('actionparam', true);
+		$arg = explode(",", $actionparam);
+		$text_json    = '{ "' . $arg[0] . '": "' . $arg[1] .  '" }';
+		sdk_action_on_car($api_url, $id, $vin, $headers, $action, $text_json, false);
+		// code continue to report data as xml
 		break;
 
 		//charge_current_request_max
@@ -353,7 +385,6 @@ switch ($action) {
 			sdk_action_on_car($api_url, $id, $vin, $headers, $action, $text_json, false);
 		}
 		// code continue to report data as xml
-		$nocache = 'true';
 		break;
 
 	case 'set_charging_amps';
@@ -366,7 +397,6 @@ switch ($action) {
 			sdk_action_on_car($api_url, $id, $vin, $headers, $action, $text_json, false);
 		}
 		// code continue to report data as xml
-		$nocache = 'true';
 		break;
 
 	case 'set_sentry_mode';
@@ -376,7 +406,15 @@ switch ($action) {
 		sdk_action_on_car($api_url, $id, $vin, $headers, $action, $text_json, false);
 
 		// code continue to report data as xml
-		$nocache = 'true';
+		break;
+
+	case 'get_data':
+		// most of the meters use this
+		// let's return as quickly as possible the cached data
+		sdk_header('text/xml');
+		$cached_xml = loadVariable('cached_xml_' . $vin);
+		echo $cached_xml;
+		die();
 		break;
 
 	case 'get_state_data':
@@ -402,79 +440,36 @@ switch ($action) {
 		saveVariable('cached_vehiclestatestate_' . $vin, $vehiclestatestate);
 		sdk_header('text/xml');
 		$xml = '<root>
-<vehicle_state>' . $vehiclestatestate . '</vehicle_state>
-<monitor_mode>' . $monitor_mode . '</monitor_mode>
-</root>';
-		echo $xml;
-		die();
-		break;
+	<vehicle_state>' . $vehiclestatestate . '</vehicle_state>
+	<monitor_mode>' . $monitor_mode . '</monitor_mode>
+	</root>';
 
-	case 'get_gps_data':
-		if ($cached_vehiclestatestate == 'online') {
+		// Do we need to refresh the cache ?
+		$last_xml_success = loadVariable('last_xml_success_' . $vin);
 
-			// Return cache ?
-			$paramsgps = loadVariable('cached_vehicle_data_' . $vin);
-			$paramsgps = $paramsgps['drive_state'];
-
-			if (empty($paramsgps)) {
+		if ($nocache != 'true') {
+			if (!empty($last_xml_success) && ((time() - $last_xml_success) / 60 < $CACHE)) { // we send back the cached response except if the state changed
+				// no need to refresh the cache
+				echo $xml;
 				die();
 			}
-
-			// id of parent control, used to send GPS data
-			$parentid = sdk_get_id_of_parent_control($moduleId);
-
-			// get GPS data
-			// $paramsgps = sdk_get_gps_state($api_url, $id, $headers);
-			$latitude = $paramsgps['latitude'];
-			$longitude = $paramsgps['longitude'];
-
-			// updating position channel
-			setValue($parentid, $latitude . ',' . $longitude);
-			//saveVariable('last_gps_success_' . $vin, time());
-			sdk_header('text/xml');
-			$gps_xml = '<root>
-<cached>0</cached>
-<coordinates>' . $latitude . ',' . $longitude . '</coordinates>
-<latitude>' . $latitude . '</latitude>
-<longitude>' . $longitude . '</longitude>
-<moduleId>' . $moduleId . '</moduleId>
-<positionmoduleid>' . $parentid . '</positionmoduleid>
-</root>';
-			echo $gps_xml;
-			// $gps_xml = str_replace('<cached>0</cached>', '<cached>1</cached>', $gps_xml);
-			//saveVariable('cached_gps_xml_' . $vin, $gps_xml);
-			// saveVariable('cached_vehiclestatestate_for_gps_' . $vin, $vehiclestatestate);
-		} else {
-			echo 'Vehicle is not online';
 		}
-		die();
-		break;
-
-	default:
 		break;
 }
 
-// Return cache ?
-$last_xml_success = loadVariable('last_xml_success_' . $vin);
+// follow up of get_state_data action, or commands
 
-if ($nocache != 'true') {
-	if (!empty($last_xml_success) && ((time() - $last_xml_success) / 60 < $CACHE)) { // we send back the cached response except if the state changed
-		sdk_header('text/xml');
-		$cached_xml = loadVariable('cached_xml_' . $vin);
-		echo $cached_xml;
-
-		die();
-	}
+if (empty($vehiclestate)) {
+	$vehiclestate = sdk_get_car_state($api_url, $id, $headers);
+	$vehiclestatestate = $vehiclestate['state'];
 }
-
-$vehiclestate = sdk_get_car_state($api_url, $id, $headers);
-$vehiclestatestate = $vehiclestate['state'];
 
 sdk_header('text/xml');
 // get vehicule data
 
 $cached_xml = '<root>
 <cached>0</cached>
+<monitor_mode>' . $monitor_mode . '</monitor_mode>
 <vehicle_state>' . $vehiclestatestate . '</vehicle_state>';
 
 if ($vehiclestatestate == 'online') {
@@ -485,6 +480,7 @@ if ($vehiclestatestate == 'online') {
 
 	$myurlget = $api_url . 'api/1/vehicles/' . $id . '/vehicle_data';
 	$response = httpQuery($myurlget, 'GET', NULL, NULL, $headers);
+
 	$params = sdk_json_decode(utf8_encode($response));
 	if ($params['error'] != '') {
 		die("Error when getting data: " . $params['error']);
@@ -499,10 +495,9 @@ if ($vehiclestatestate == 'online') {
 	$batteryrange = round($paramResponse['charge_state']['battery_range'] * 1.60934);
 	$estbatteryrange = round($paramResponse['charge_state']['est_battery_range'] * 1.60934);
 
-	$chargeportdooropen = $paramResponse['charge_state']['charge_port_door_open'] ? "true" : "false";
-	$locked = $paramResponse['vehicle_state']['locked'] ? "true" : "false";
-	$isclimateon = $paramResponse['climate_state']['is_climate_on'] ? "true" : "false";
-	$sentrymode = $paramResponse['vehicle_state']['sentry_mode'] ? "true" : "false";
+	$sentrymode = $paramResponse['vehicle_state']['sentry_mode'] ? 100 : 0;
+	$isclimateon = $paramResponse['climate_state']['is_climate_on'] ? 100 : 0;
+
 	$shiftstate = empty($paramResponse['drive_state']['shift_state']) ? 'P' : $paramResponse['drive_state']['shift_state'];
 	$minutestofullcharge = (float)$paramResponse['charge_state']['minutes_to_full_charge'];
 
@@ -511,10 +506,19 @@ if ($vehiclestatestate == 'online') {
 	if ($minutestofullcharge >= 0)
 		$timetofullcharge =  ($hours > 0 ? $hours . ' h '   : '') . $minutes . ' min';
 
+	$latitude = $paramResponse['drive_state']['latitude'];
+	$longitude = $paramResponse['drive_state']['longitude'];
+
+	// id of parent control, used to send GPS data
+	$parentid = sdk_get_id_of_parent_control($moduleId);
+
+	// updating position channel
+	setValue($parentid, $latitude . ',' . $longitude);
+
 	$cached_xml .= '<battery_level>' . $paramResponse['charge_state']['battery_level'] . '</battery_level>
 <charge_limit_soc>' . $paramResponse['charge_state']['charge_limit_soc'] . '</charge_limit_soc>
 <charge_energy_added>' . $paramResponse['charge_state']['charge_energy_added'] . '</charge_energy_added>
-<charge_port_door_open>' . $chargeportdooropen . '</charge_port_door_open>
+<charge_port_door_open>' . ($paramResponse['charge_state']['charge_port_door_open'] ? 100 : 0) . '</charge_port_door_open>
 <charging_state>' . $paramResponse['charge_state']['charging_state'] . '</charging_state>
 <minutes_to_full_charge>' . $minutestofullcharge . '</minutes_to_full_charge>
 <time_to_full_charge>' . $timetofullcharge . '</time_to_full_charge>
@@ -528,12 +532,21 @@ if ($vehiclestatestate == 'online') {
 <inside_temp>' . $paramResponse['climate_state']['inside_temp'] . '</inside_temp>
 <seat_heater_left>' . $paramResponse['climate_state']['seat_heater_left'] . '</seat_heater_left>
 <seat_heater_right>' . $paramResponse['climate_state']['seat_heater_right'] . '</seat_heater_right>
+<seat_heater_rear_left>' . $paramResponse['climate_state']['seat_heater_rear_left'] . '</seat_heater_rear_left>
+<seat_heater_rear_center>' . $paramResponse['climate_state']['seat_heater_rear_center'] . '</seat_heater_rear_center>
+<seat_heater_rear_right>' . $paramResponse['climate_state']['seat_heater_rear_right'] . '</seat_heater_rear_right>
 <is_climate_on>' . $isclimateon . '</is_climate_on>
+<steering_wheel_heater>' . ($paramResponse['climate_state']['steering_wheel_heater'] ? 100 : 0) . '</steering_wheel_heater>
 <odometerkm>' . $odometerkm . '</odometerkm>
-<locked>' . $locked . '</locked>
+<locked>' . ($paramResponse['vehicle_state']['locked'] ? 100 : 0) . '</locked>
+<remote_start>' . ($paramResponse['vehicle_state']['remote_start'] ? 100 : 0) . '</remote_start>
 <vehicle_name>' . $paramResponse['vehicle_state']['vehicle_name'] . '</vehicle_name>
 <shift_state>' . $shiftstate . '</shift_state>
 <sentry_mode>' . $sentrymode . '</sentry_mode>
+<latitude>' . $latitude . '</latitude>
+<longitude>' . $longitude . '</longitude>
+<rtclosed>' . ($paramResponse['vehicle_state']['rt'] == 0 ? 100 : 0) . '</rtclosed>
+<ftclosed>' . ($paramResponse['vehicle_state']['ft'] == 0 ? 100 : 0) . '</ftclosed>
 <access_token_duration_before_exp>' . (($access_token_start_time + $access_token_duration * 60) - time()) / 60 . '</access_token_duration_before_exp>
 <speedkmh>' . $speedkmh . '</speedkmh>';
 }
@@ -550,7 +563,7 @@ saveVariable('cached_vehicle_data_' . $vin, $paramResponse);
 // $paramResponse
 
 // if shift state is D N R or, or if car is charging, or if air conditionning is on, then store the time to continue do active monitoring
-if ($paramResponse['drive_state']['shift_state'] != null || $paramResponse['charge_state']['charger_power'] > 0 || $isclimateon == "true" || $sentrymode == "true") {
+if ($paramResponse['drive_state']['shift_state'] != null || $paramResponse['charge_state']['charger_power'] > 0 || $isclimateon == 100 || $sentrymode == 100) {
 	saveVariable('time_when_car_was_active_' . $vin, time());
 	saveVariable('monitor_mode_' . $vin, 'active');
 }

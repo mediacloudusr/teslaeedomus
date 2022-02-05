@@ -2,9 +2,9 @@
   "plugin_id": "teslaapp",
   "name_fr": "Véhicule Tesla",
   "icon": "tesla.png",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "creation_date": "2021-11-17",
-  "modification_date": "2021-12-13",
+  "modification_date": "2022-02-05",
   "author": "<a href='https://forum.eedomus.com/ucp.php?i=pm&mode=compose&u=5280' target='_blank'>@mediacloud</a> / <a href='https://github.com/mediacloudusr/teslaeedomus' target='_blank'> GitHub </a>",
   "description_fr": "Recupérez les informations de votre véhicule Tesla à partir de votre box Eedomus.",
   "description_en": "Get the Tesla car information from your Eedomus box.",
@@ -171,6 +171,30 @@
       "field": "style: 'margin-top: 6px;', checked: true"
     },
     {
+      "parameter": "box_seat_heater_rear_left",
+      "description": "Chauffage du siège arrière gauche :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: false"
+    },
+    {
+      "parameter": "box_seat_heater_rear_center",
+      "description": "Chauffage du siège arrière central :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: false"
+    },
+    {
+      "parameter": "box_seat_heater_rear_right",
+      "description": "Chauffage du siège arrière droit :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: false"
+    },
+    {
+      "parameter": "box_steering_wheel_heater",
+      "description": "Chauffage du volant :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: false"
+    },
+    {
       "parameter": "box_odometer",
       "description": "Compteur kilométrique :",
       "xtype": "checkbox",
@@ -181,6 +205,24 @@
       "description": "Vérouillage du véhicule :",
       "xtype": "checkbox",
       "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_remote_start",
+      "description": "Démarrage à distance :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_rt_closed",
+      "description": "Coffre arrière :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: true"
+    },
+    {
+      "parameter": "box_ft_closed",
+      "description": "Coffre avant :",
+      "xtype": "checkbox",
+      "field": "style: 'margin-top: 6px;', checked: false"
     },
     {
       "parameter": "box_vehicle_name",
@@ -222,8 +264,8 @@
     {
       "device_id": "position",
       "module_id": "31",
-      "name_fr": "plugin.name - Position",
-      "name_en": "plugin.name - Position",
+      "name_fr": "Position",
+      "name_en": "Position",
       "utilisation_id": "0",
       "icon": "world.png",
       "value_type": "string",
@@ -238,8 +280,8 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Latitude",
-      "name_en": "plugin.name - Latitude",
+      "name_fr": "Latitude",
+      "name_en": "Latitude",
       "icon": "maps.png",
       "utilisation_id": "35",
       "parameters": {
@@ -247,7 +289,7 @@
         "VAR2": "plugin.parameters.vin",
         "value_type": "string",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_gps_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/latitude",
         "POLLING": "3"
       }
@@ -258,8 +300,8 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Longitude",
-      "name_en": "plugin.name - Longitude",
+      "name_fr": "Longitude",
+      "name_en": "Longitude",
       "icon": "maps.png",
       "utilisation_id": "35",
       "parameters": {
@@ -267,7 +309,7 @@
         "VAR2": "plugin.parameters.vin",
         "value_type": "string",
         "ignore_errors": 1,
-        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_gps_data",
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
         "RAW_XPATH": "/root/longitude",
         "POLLING": "3"
       }
@@ -277,8 +319,8 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Etat",
-      "name_en": "plugin.name - State",
+      "name_fr": "Etat",
+      "name_en": "State",
       "utilisation_id": "35",
       "parameters": {
         "VAR1": "plugin.parameters.code",
@@ -313,8 +355,8 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Niveau de la batterie",
-      "name_en": "plugin.name - Battery level",
+      "name_fr": "Niveau de la batterie",
+      "name_en": "Battery level",
       "icon": "battery.png",
       "utilisation_id": "35",
       "value_unit": "%",
@@ -334,8 +376,8 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Limite de recharge",
-      "name_en": "plugin.name - Charge limit (defined)",
+      "name_fr": "Limite de recharge",
+      "name_en": "Charge limit (defined)",
       "icon": "volume.png",
       "utilisation_id": "43",
       "value_unit": "%",
@@ -421,8 +463,8 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Energie ajoutée",
-      "name_en": "plugin.name - Charge energy added",
+      "name_fr": "Energie ajoutée",
+      "name_en": "Charge energy added",
       "utilisation_id": "35",
       "value_unit": "kWh",
       "icon": "consoelec.png",
@@ -442,8 +484,8 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Energie ajoutée (coût)",
-      "name_en": "plugin.name - Charge energy added (cost)",
+      "name_fr": "Energie ajoutée (coût)",
+      "name_en": "Charge energy added (cost)",
       "utilisation_id": "26",
       "value_unit": "&euro;",
       "icon": "teleinfo_money.png",
@@ -463,9 +505,9 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Trappe de la prise",
-      "name_en": "plugin.name - Charge port door",
-      "utilisation_id": "43",
+      "name_fr": "Trappe de la prise",
+      "name_en": "Charge port door",
+      "utilisation_id": "2",
       "parameters": {
         "VAR1": "plugin.parameters.code",
         "VAR2": "plugin.parameters.vin",
@@ -477,7 +519,7 @@
       },
       "values": [
         {
-          "value": "false",
+          "value": 0,
           "icon": "lock_enabled.png",
           "description": "Fermée",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
@@ -485,7 +527,7 @@
           "http_params": "&action=charge_port_door_close"
         },
         {
-          "value": "true",
+          "value": 100,
           "icon": "lock_disabled.png",
           "description": "Ouverte",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
@@ -500,8 +542,8 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Etat de la recharge",
-      "name_en": "plugin.name - Charging state",
+      "name_fr": "Etat de la recharge",
+      "name_en": "Charging state",
       "utilisation_id": "43",
       "value_unit": "",
       "parameters": {
@@ -548,8 +590,8 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Minutes de recharge restantes",
-      "name_en": "plugin.name - Minutes to charge to limit",
+      "name_fr": "Minutes de recharge restantes",
+      "name_en": "Minutes to charge to limit",
       "icon": "prise_tm.png",
       "utilisation_id": "35",
       "value_unit": "min",
@@ -569,8 +611,8 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Temps de recharge restant",
-      "name_en": "plugin.name - Time to charge to limit",
+      "name_fr": "Temps de recharge restant",
+      "name_en": "Time to charge to limit",
       "icon": "prise_tm.png",
       "utilisation_id": "35",
       "value_unit": "",
@@ -591,8 +633,8 @@
       "module_id": "51",
       "type": "http",
       "icon": "consoelec.png",
-      "name_fr": "plugin.name - Courant de recharge",
-      "name_en": "plugin.name - Charge rate",
+      "name_fr": "Courant de recharge",
+      "name_en": "Charge rate",
       "utilisation_id": "35",
       "value_unit": "A",
       "parameters": {
@@ -612,8 +654,8 @@
       "module_id": "41",
       "type": "http",
       "icon": "consoelec.png",
-      "name_fr": "plugin.name - Limite du courant de recharge",
-      "name_en": "plugin.name - Charge rate limit (defined)",
+      "name_fr": "Limite du courant de recharge",
+      "name_en": "Charge rate limit (defined)",
       "utilisation_id": "43",
       "value_unit": "A",
       "parameters": {
@@ -707,8 +749,8 @@
       "module_id": "51",
       "type": "http",
       "icon": "consoelec.png",
-      "name_fr": "plugin.name - Tension de recharge",
-      "name_en": "plugin.name - Charger voltage",
+      "name_fr": "Tension de recharge",
+      "name_en": "Charger voltage",
       "utilisation_id": "35",
       "value_unit": "V",
       "parameters": {
@@ -728,8 +770,8 @@
       "module_id": "51",
       "type": "http",
       "icon": "consoelec.png",
-      "name_fr": "plugin.name - Puissance de recharge",
-      "name_en": "plugin.name - Charger power",
+      "name_fr": "Puissance de recharge",
+      "name_en": "Charger power",
       "utilisation_id": "26",
       "value_unit": "kW",
       "parameters": {
@@ -748,8 +790,8 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Autonomie restante (théorique)",
-      "name_en": "plugin.name - Battery range (ideal)",
+      "name_fr": "Autonomie restante (théorique)",
+      "name_en": "Battery range (ideal)",
       "utilisation_id": "35",
       "value_unit": "km",
       "icon": "autonomie.png",
@@ -769,8 +811,8 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Autonomie restante (estimée)",
-      "name_en": "plugin.name - Battery range (estimated)",
+      "name_fr": "Autonomie restante (estimée)",
+      "name_en": "Battery range (estimated)",
       "utilisation_id": "35",
       "value_unit": "km",
       "icon": "autonomie.png",
@@ -790,8 +832,8 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Température extérieure",
-      "name_en": "plugin.name - Outside temperature",
+      "name_fr": "Température extérieure",
+      "name_en": "Outside temperature",
       "utilisation_id": "7",
       "value_unit": "°C",
       "icon": "thermometer.png",
@@ -811,8 +853,8 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Température intérieure",
-      "name_en": "plugin.name - Inside temperature",
+      "name_fr": "Température intérieure",
+      "name_en": "Inside temperature",
       "utilisation_id": "7",
       "value_unit": "°C",
       "icon": "thermo.png",
@@ -832,9 +874,9 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Chauffage et climatisation",
-      "name_en": "plugin.name - Heat and air conditioning",
-      "utilisation_id": "43",
+      "name_fr": "Chauffage et climatisation",
+      "name_en": "Heat and air conditioning",
+      "utilisation_id": "2",
       "value_unit": "",
       "parameters": {
         "VAR1": "plugin.parameters.code",
@@ -847,7 +889,7 @@
       },
       "values": [
         {
-          "value": "true",
+          "value": 100,
           "description": "Marche",
           "icon": "fan_b1.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
@@ -855,7 +897,7 @@
           "http_params": "&action=auto_conditioning_start"
         },
         {
-          "value": "false",
+          "value": 0,
           "description": "Arrêt",
           "icon": "fan_b2.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
@@ -870,8 +912,8 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Chauffage du siège gauche",
-      "name_en": "plugin.name - Left seat heater",
+      "name_fr": "Chauffage du siège gauche",
+      "name_en": "Left seat heater",
       "utilisation_id": "43",
       "value_unit": "",
       "parameters": {
@@ -924,8 +966,8 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Chauffage du siège droit",
-      "name_en": "plugin.name - Right seat heater",
+      "name_fr": "Chauffage du siège droit",
+      "name_en": "Right seat heater",
       "utilisation_id": "43",
       "value_unit": "",
       "parameters": {
@@ -973,13 +1015,213 @@
       ]
     },
     {
+      "device_id": "climate_state_seat_heater_rear_left",
+      "create": "plugin.parameters.box_seat_heater_rear_left",
+      "parent_id": "position",
+      "module_id": "41",
+      "type": "http",
+      "name_fr": "Chauffage du siège arrière gauche",
+      "name_en": "Rear left seat heater",
+      "utilisation_id": "43",
+      "value_unit": "",
+      "parameters": {
+        "VAR1": "plugin.parameters.code",
+        "VAR2": "plugin.parameters.vin",
+        "value_type": "list",
+        "ignore_errors": 1,
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
+        "RAW_XPATH": "/root/seat_heater_rear_left",
+        "POLLING": "3"
+      },
+      "values": [
+        {
+          "value": "0",
+          "description": "Arrêt",
+          "icon": "heater_0.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C2%2Clevel%2C0"
+        },
+        {
+          "value": "1",
+          "description": "Marche - niveau 1",
+          "icon": "heater_1.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C2%2Clevel%2C1"
+        },
+        {
+          "value": "2",
+          "description": "Marche - niveau 2",
+          "icon": "heater_2.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C2%2Clevel%2C2"
+        },
+        {
+          "value": "3",
+          "description": "Marche - niveau 3",
+          "icon": "heater_3.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C2%2Clevel%2C3"
+        }
+      ]
+    },
+    {
+      "device_id": "climate_state_seat_heater_rear_center",
+      "create": "plugin.parameters.box_seat_heater_rear_center",
+      "parent_id": "position",
+      "module_id": "41",
+      "type": "http",
+      "name_fr": "Chauffage du siège arrière central",
+      "name_en": "Rear center seat heater",
+      "utilisation_id": "43",
+      "value_unit": "",
+      "parameters": {
+        "VAR1": "plugin.parameters.code",
+        "VAR2": "plugin.parameters.vin",
+        "value_type": "list",
+        "ignore_errors": 1,
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
+        "RAW_XPATH": "/root/seat_heater_rear_center",
+        "POLLING": "3"
+      },
+      "values": [
+        {
+          "value": "0",
+          "description": "Arrêt",
+          "icon": "heater_0.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C4%2Clevel%2C0"
+        },
+        {
+          "value": "1",
+          "description": "Marche - niveau 1",
+          "icon": "heater_1.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C4%2Clevel%2C1"
+        },
+        {
+          "value": "2",
+          "description": "Marche - niveau 2",
+          "icon": "heater_2.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C4%2Clevel%2C2"
+        },
+        {
+          "value": "3",
+          "description": "Marche - niveau 3",
+          "icon": "heater_3.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C4%2Clevel%2C3"
+        }
+      ]
+    },
+    {
+      "device_id": "climate_state_seat_heater_rear_right",
+      "create": "plugin.parameters.box_seat_heater_rear_right",
+      "parent_id": "position",
+      "module_id": "41",
+      "type": "http",
+      "name_fr": "Chauffage du siège arrière droit",
+      "name_en": "Rear right seat heater",
+      "utilisation_id": "43",
+      "value_unit": "",
+      "parameters": {
+        "VAR1": "plugin.parameters.code",
+        "VAR2": "plugin.parameters.vin",
+        "value_type": "list",
+        "ignore_errors": 1,
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
+        "RAW_XPATH": "/root/seat_heater_rear_center",
+        "POLLING": "3"
+      },
+      "values": [
+        {
+          "value": "0",
+          "description": "Arrêt",
+          "icon": "heater_0.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C5%2Clevel%2C0"
+        },
+        {
+          "value": "1",
+          "description": "Marche - niveau 1",
+          "icon": "heater_1.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C5%2Clevel%2C1"
+        },
+        {
+          "value": "2",
+          "description": "Marche - niveau 2",
+          "icon": "heater_2.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C5%2Clevel%2C2"
+        },
+        {
+          "value": "3",
+          "description": "Marche - niveau 3",
+          "icon": "heater_3.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C5%2Clevel%2C3"
+        }
+      ]
+    },
+    {
+      "device_id": "climate_state_steering_wheel_heater",
+      "create": "plugin.parameters.box_steering_wheel_heater",
+      "parent_id": "position",
+      "module_id": "41",
+      "type": "http",
+      "name_fr": "Chauffage du volant",
+      "name_en": "Steering wheel heater",
+      "utilisation_id": "2",
+      "value_unit": "",
+      "parameters": {
+        "VAR1": "plugin.parameters.code",
+        "VAR2": "plugin.parameters.vin",
+        "value_type": "list",
+        "ignore_errors": 1,
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
+        "RAW_XPATH": "/root/steering_wheel_heater",
+        "POLLING": "3"
+      },
+      "values": [
+        {
+          "value": 100,
+          "description": "Marche",
+          "icon": "heater_1.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_steering_wheel_heater_request&actionparam=on%2Ctrue"
+        },
+        {
+          "value": 0,
+          "description": "Arrêt",
+          "icon": "heater_0.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_steering_wheel_heater_request&actionparam=on%2Cfalse"
+        }
+      ]
+    },
+    {
       "device_id": "vehicle_state_odometer",
       "create": "plugin.parameters.box_odometer",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Compteur kilométrique",
-      "name_en": "plugin.name - Odometer",
+      "name_fr": "Compteur kilométrique",
+      "name_en": "Odometer",
       "utilisation_id": "35",
       "value_unit": "km",
       "icon": "motor.png",
@@ -999,9 +1241,9 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Vérouillage du véhicule",
-      "name_en": "plugin.name - Doors",
-      "utilisation_id": "43",
+      "name_fr": "Vérouillage du véhicule",
+      "name_en": "Doors",
+      "utilisation_id": "2",
       "parameters": {
         "VAR1": "plugin.parameters.code",
         "VAR2": "plugin.parameters.vin",
@@ -1013,7 +1255,7 @@
       },
       "values": [
         {
-          "value": "true",
+          "value": 100,
           "description": "Vérouillé",
           "icon": "lock_enabled.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
@@ -1021,7 +1263,7 @@
           "http_params": "&action=door_lock"
         },
         {
-          "value": "false",
+          "value": 0,
           "description": "Dévérouillé",
           "icon": "lock_disabled.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
@@ -1031,13 +1273,124 @@
       ]
     },
     {
+      "device_id": "vehicle_state_remote_start",
+      "create": "plugin.parameters.box_remote_start",
+      "parent_id": "position",
+      "module_id": "41",
+      "type": "http",
+      "name_fr": "Démarrage à distance",
+      "name_en": "Doors",
+      "utilisation_id": "2",
+      "parameters": {
+        "VAR1": "plugin.parameters.code",
+        "VAR2": "plugin.parameters.vin",
+        "value_type": "list",
+        "ignore_errors": 1,
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
+        "RAW_XPATH": "/root/remote_start",
+        "POLLING": "3"
+      },
+      "values": [
+        {
+          "value": 100,
+          "description": "Marche",
+          "icon": "lock_enabled.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_start_drive"
+        },
+        {
+          "value": 0,
+          "description": "Arrêt",
+          "icon": "lock_disabled.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_start_drive"
+        }
+      ]
+    },
+    {
+      "device_id": "rt_closed",
+      "create": "plugin.parameters.box_rt_closed",
+      "parent_id": "position",
+      "module_id": "41",
+      "type": "http",
+      "name_fr": "Coffre arrière",
+      "name_en": "Trunk",
+      "utilisation_id": "43",
+      "parameters": {
+        "VAR1": "plugin.parameters.code",
+        "VAR2": "plugin.parameters.vin",
+        "value_type": "list",
+        "ignore_errors": 1,
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
+        "RAW_XPATH": "/root/rtclosed",
+        "POLLING": "3"
+      },
+      "values": [
+        {
+          "value": 100,
+          "description": "Fermé",
+          "icon": "lock_enabled.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=actuate_trunk&actionparam=which_trunk%2Crear"
+        },
+        {
+          "value": 0,
+          "description": "Ouvert",
+          "icon": "lock_disabled.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=actuate_trunk&actionparam=which_trunk%2Crear"
+        }
+      ]
+    },
+    {
+      "device_id": "ft_closed",
+      "create": "plugin.parameters.box_rt_closed",
+      "parent_id": "position",
+      "module_id": "41",
+      "type": "http",
+      "name_fr": "Coffre avant",
+      "name_en": "Frunk",
+      "utilisation_id": "43",
+      "parameters": {
+        "VAR1": "plugin.parameters.code",
+        "VAR2": "plugin.parameters.vin",
+        "value_type": "list",
+        "ignore_errors": 1,
+        "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
+        "RAW_XPATH": "/root/ftclosed",
+        "POLLING": "3"
+      },
+      "values": [
+        {
+          "value": 100,
+          "description": "Fermé",
+          "icon": "lock_enabled.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=actuate_trunk&actionparam=which_trunk%2Cfront"
+        },
+        {
+          "value": 0,
+          "description": "Ouvert",
+          "icon": "lock_disabled.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=actuate_trunk&actionparam=which_trunk%2Cfront"
+        }
+      ]
+    },
+    {
       "device_id": "vehicle_state_vehicle_name",
       "create": "plugin.parameters.box_vehicle_name",
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Nom du véhicule",
-      "name_en": "plugin.name - Vehicle name",
+      "name_fr": "Nom du véhicule",
+      "name_en": "Vehicle name",
       "utilisation_id": "0",
       "value_unit": "",
       "icon": "tesla.png",
@@ -1057,8 +1410,8 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Levier de vitesse",
-      "name_en": "plugin.name - Shift state",
+      "name_fr": "Levier de vitesse",
+      "name_en": "Shift state",
       "utilisation_id": "0",
       "value_unit": "",
       "icon": "left_right.png",
@@ -1100,8 +1453,8 @@
       "parent_id": "position",
       "module_id": "51",
       "type": "http",
-      "name_fr": "plugin.name - Vitesse",
-      "name_en": "plugin.name - Speed",
+      "name_fr": "Vitesse",
+      "name_en": "Speed",
       "utilisation_id": "29",
       "value_unit": "km/h",
       "icon": "compteurelec64b.png",
@@ -1121,8 +1474,8 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Sentinelle",
-      "name_en": "plugin.name - Sentry",
+      "name_fr": "Sentinelle",
+      "name_en": "Sentry",
       "utilisation_id": "43",
       "parameters": {
         "VAR1": "plugin.parameters.code",
@@ -1135,7 +1488,7 @@
       },
       "values": [
         {
-          "value": "true",
+          "value": 100,
           "description": "Marche",
           "icon": "camera_b1.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
@@ -1143,7 +1496,7 @@
           "http_params": "&action=set_sentry_mode&actionparam=on%2Ctrue"
         },
         {
-          "value": "false",
+          "value": 0,
           "description": "Arrêt",
           "icon": "camera_b2.png",
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
@@ -1158,8 +1511,8 @@
       "parent_id": "position",
       "module_id": "41",
       "type": "http",
-      "name_fr": "plugin.name - Commandes",
-      "name_en": "plugin.name - Commands",
+      "name_fr": "Commandes",
+      "name_en": "Commands",
       "icon": "pilotage.png",
       "value_type": "list",
       "utilisation_id": "43",
@@ -1506,6 +1859,123 @@
           "hidden": 1
         },
         {
+          "value": "remote_seat_heater_request_2_0",
+          "description": "Chauffage du siège arrière gauche : arrêt",
+          "icon": "heater_0.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C2%2Clevel%2C0",
+          "hidden": 1
+        },
+        {
+          "value": "remote_seat_heater_request_2_1",
+          "description": "Chauffage du siège arrière gauche : niveau 1",
+          "icon": "heater_1.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C2%2Clevel%2C1",
+          "hidden": 1
+        },
+        {
+          "value": "remote_seat_heater_request_2_2",
+          "description": "Chauffage du siège arrière gauche : niveau 2",
+          "icon": "heater_2.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C2%2Clevel%2C2",
+          "hidden": 1
+        },
+        {
+          "value": "remote_seat_heater_request_4_0",
+          "description": "Chauffage du siège arrière central : arrêt",
+          "icon": "heater_0.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C4%2Clevel%2C0",
+          "hidden": 1
+        },
+        {
+          "value": "remote_seat_heater_request_4_1",
+          "description": "Chauffage du siège arrière central : niveau 1",
+          "icon": "heater_1.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C4%2Clevel%2C1",
+          "hidden": 1
+        },
+        {
+          "value": "remote_seat_heater_request_4_2",
+          "description": "Chauffage du siège arrière central : niveau 2",
+          "icon": "heater_2.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C4%2Clevel%2C2",
+          "hidden": 1
+        },
+        {
+          "value": "remote_seat_heater_request_4_3",
+          "description": "Chauffage du siège arrière central : niveau 3",
+          "icon": "heater_3.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C4%2Clevel%2C3",
+          "hidden": 1
+        },
+        {
+          "value": "remote_seat_heater_request_5_0",
+          "description": "Chauffage du siège arrière droit : arrêt",
+          "icon": "heater_0.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C5%2Clevel%2C0",
+          "hidden": 1
+        },
+        {
+          "value": "remote_seat_heater_request_5_1",
+          "description": "Chauffage du siège arrière droit : niveau 1",
+          "icon": "heater_1.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C5%2Clevel%2C1",
+          "hidden": 1
+        },
+        {
+          "value": "remote_seat_heater_request_5_2",
+          "description": "Chauffage du siège arrière droit : niveau 2",
+          "icon": "heater_2.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C5%2Clevel%2C2",
+          "hidden": 1
+        },
+        {
+          "value": "remote_seat_heater_request_5_3",
+          "description": "Chauffage du siège arrière droit : niveau 3",
+          "icon": "heater_3.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_seat_heater_request&actionparam=heater%2C5%2Clevel%2C3",
+          "hidden": 1
+        },
+        {
+          "value": "remote_steering_wheel_heater_request_on",
+          "description": "Démarrer le chauffage du volant",
+          "icon": "heater_1.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_steering_wheel_heater_request&actionparam=on%2Ctrue",
+          "hidden": 1
+        },
+        {
+          "value": "remote_steering_wheel_heater_request_off",
+          "description": "Arrêter le chauffage du volant",
+          "icon": "heater_0.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_steering_wheel_heater_request&actionparam=on%2Cfalse",
+          "hidden": 1
+        },
+        {
           "value": "sentry_mode_on",
           "description": "Activer Sentinelle",
           "icon": "camera_b1.png",
@@ -1521,6 +1991,33 @@
           "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
           "http_type": "GET",
           "http_params": "&action=set_sentry_mode&actionparam=on%2Cfalse",
+          "hidden": 1
+        },
+        {
+          "value": "remote_start_drive",
+          "description": "Activer le démarrage à distance",
+          "icon": "default_on.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=remote_start_drive",
+          "hidden": 1
+        },
+        {
+          "value": "actuate_trunk_rear",
+          "description": "Ouvrir/ferme le coffre arrière",
+          "icon": "heater_1.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=actuate_trunk&actionparam=which_trunk%2Crear",
+          "hidden": 1
+        },
+        {
+          "value": "actuate_trunk_front",
+          "description": "Ouvrir le coffre avant",
+          "icon": "heater_1.png",
+          "http_url": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]",
+          "http_type": "GET",
+          "http_params": "&action=actuate_trunk&actionparam=which_trunk%2Cfront",
           "hidden": 1
         }
       ]
