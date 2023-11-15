@@ -6,7 +6,7 @@ Ce plugin a été développé par [mediacloud](https://forum.eedomus.com/ucp.php?i=p
 
 Voir la [discussion sur le forum](https://forum.eedomus.com/viewtopic.php?f=16&t=10515) pour plus d'informations ou donner un feedback.
 
-La version actuelle est 1.8.0.
+La version actuelle est 1.9.0.
 
 ## Fonctionnalités
 
@@ -66,7 +66,7 @@ Note : chaque commande réveille le véhicule si nécessaire.
 
 Installez le plugin depuis le store Eedomus.
 
-Il est recommandé d'avoir votre voiture Tesla réveillé lorsque vous installez le plugin. Pour réveiller le véhicule, lancez l'application Tesla sur votre téléphone, ou ouvrez/fermez une portière.
+Il est recommandé d'avoir votre voiture Tesla réveillée lorsque vous installez le plugin. Pour réveiller le véhicule, lancez l'application Tesla sur votre téléphone, ou ouvrez/fermez une portière.
 
 ### Pièce
 

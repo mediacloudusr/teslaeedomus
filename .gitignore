@@ -475,3 +475,6 @@ composer.lock
 
 ##### Eedomus zip file
 *.zip
+
+##### Visual Studio cache/options directory
+.vs/

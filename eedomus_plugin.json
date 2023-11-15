@@ -2,9 +2,9 @@
   "plugin_id": "teslaapp",
   "name_fr": "Véhicule Tesla",
   "icon": "tesla.png",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "creation_date": "2021-11-17",
-  "modification_date": "2022-02-05",
+  "modification_date": "2023-11-15",
   "author": "<a href='https://forum.eedomus.com/ucp.php?i=pm&mode=compose&u=5280' target='_blank'>@mediacloud</a> / <a href='https://github.com/mediacloudusr/teslaeedomus' target='_blank'> GitHub </a>",
   "description_fr": "Recupérez les informations de votre véhicule Tesla à partir de votre box Eedomus.",
   "description_en": "Get the Tesla car information from your Eedomus box.",
@@ -495,7 +495,7 @@
         "value_type": "float",
         "ignore_errors": 1,
         "RAW_URL": "http://localhost/script/?exec=tesla_oauth.php&vin=[VAR2]&action=get_data",
-        "RAW_XPATH": "(/root/charge_energy_added)*0.1544",
+        "RAW_XPATH": "(/root/charge_energy_added)*0.2276",
         "POLLING": "3"
       }
     },
